@@ -25,6 +25,8 @@ public class StateMan {
 	public static final int LOGIN_OK = 3;
 	public static final int LOGIN_ERR = 4;
 	public static final int NOUSERSELECTED = 5;
+	public static final int LOGOUT_OK = 6;
+	public static final int LOGOUT_ERR = 7;
 	
 	
 	private StateMan(){
@@ -36,6 +38,8 @@ public class StateMan {
 		states.put(LOGIN_OK, new MyState("Login erfolgreich.", Color.GREEN, NORMAL));
 		states.put(LOGIN_ERR, new MyState("Login fehlgeschlagen.", Color.RED, NORMAL));
 		states.put(NOUSERSELECTED, new MyState("Bitte wählen Sie einen Benutzer aus!", Color.RED, NORMAL));
+		states.put(LOGOUT_OK, new MyState("Logout erfolgreich.", Color.GREEN, NORMAL));
+		states.put(LOGOUT_ERR, new MyState("Logout fehlgeschlagen.", Color.RED, NORMAL));
 	}
 	
 	public static StateMan SM(){

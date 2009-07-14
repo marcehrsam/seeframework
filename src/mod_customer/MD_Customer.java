@@ -160,6 +160,12 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean readConfigFile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 

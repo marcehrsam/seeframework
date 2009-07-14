@@ -120,5 +120,11 @@ public class MD_ProductManager extends AbstractModule{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean readConfigFile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

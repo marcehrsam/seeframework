@@ -76,5 +76,11 @@ public class MD_Billing extends AbstractModule{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean readConfigFile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
