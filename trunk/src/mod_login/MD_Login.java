@@ -6,6 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
+import mod_login.action.ACT_MI_KLICK_AsAdmin;
 import mod_login.action.ACT_MI_KLICK_Logout;
 import mod_login.gui.GU_MP_LoginStartScreen;
 import mod_user.User;
