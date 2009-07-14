@@ -123,7 +123,7 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 		boolean ok = userList.add(user);
 		setChanged();
 		notifyObservers();
-		Framework.FW().setState(StateMan.SM().getState(StateMan.OK));
+		Framework.FW().setState(StateMan.SM().getState(StateMan.USER_ADDED));
 		return ok;
 	}
 

@@ -9,6 +9,7 @@ import javax.swing.Icon;
 
 import mod_user.MD_User;
 import mod_user.MyUser;
+import mod_user.gui.GU_Dialog_AddUser;
 
 public class ACT_MI_KLICK_AddUser extends AbstractAction{
 	
@@ -19,8 +20,7 @@ public class ACT_MI_KLICK_AddUser extends AbstractAction{
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
-		MD_User.getInstance().addUser(new MyUser("Test","Test"));
-
+		GU_Dialog_AddUser dialog = new GU_Dialog_AddUser();
 	}
 
 }

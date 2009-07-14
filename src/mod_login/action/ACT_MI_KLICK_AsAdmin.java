@@ -1,4 +1,4 @@
-package mod_login;
+package mod_login.action;
 
 import java.awt.event.ActionEvent;
 
