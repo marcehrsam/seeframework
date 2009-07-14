@@ -41,6 +41,7 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 	public final int HEIGHT = 768;
 	public final String TITLE = "SEE Framework Entwicklerversion v0.0";
 	public final String FILE = "Datei";
+	public final String CONFIG = "Einstellungen";
 	
 	private JMenuBar mainMenu = null;
 	private JPanel content = null;
@@ -85,9 +86,21 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 			}
 		}
 		
+		initConfigMenu();
+		
 		getContentPane().add(mainMenu, BorderLayout.NORTH);
 	}
 	
+	private void initConfigMenu() {
+		JMenu configMenu = new JMenu(CONFIG);
+		
+		JMenuItem miConfigApp = new JMenuItem(new ACT_MI_KLICK_ConfigApp());
+		configMenu.add(miConfigApp);
+		
+		mainMenu.add(configMenu);
+		
+	}
+
 	private void initFileMenu(){
 		fileMenu = new JMenu(FILE);
 		jsep = new JSeparator();

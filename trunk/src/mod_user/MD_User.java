@@ -1,7 +1,10 @@
 package mod_user;
 
+import gui.GU_FrameworkMainScreenDefaultContent;
+import gui.GU_MP_BlankScreen;
 import gui.MyPanel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,12 @@ import mod_user.action.ACT_MI_KLICK_AddUser;
 import mod_user.action.ACT_MI_KLICK_ChangePassword;
 import mod_user.action.ACT_MI_KLICK_Privileges;
 
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+
+import tools.Debug;
 import base.AbstractModule;
 import base.Framework;
 import base.StateMan;
@@ -30,13 +39,11 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	
 	private JMenu menu = null;
 	public final String MENUNAME = "Benutzer";
+	public final String CONFIGFILE = "user.dat";
 	
 	private MD_User(){
 		userList = new ArrayList<MyUser>();
 		listDataListenerList = new ArrayList<ListDataListener>();
-		
-		MyUser testUser = new MyUser("Administrator", "Test");
-		userList.add(testUser);
 		
 	}
 	
@@ -62,8 +69,7 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 
 	@Override
 	public MyPanel getContentScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GU_MP_BlankScreen();
 	}
 
 	@Override
@@ -80,7 +86,7 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	@Override
 	public boolean stopAllActions() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public Object getSelectedItem() {
@@ -119,6 +125,30 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 		notifyObservers();
 		Framework.FW().setState(StateMan.SM().getState(StateMan.OK));
 		return ok;
+	}
+
+	@Override
+	public boolean readConfigFile() {
+	
+		//liesst benutzer und passwörter ein (aus user.dat)
+		//TODO: auf Hashs umstellen
+		try {
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(CONFIGFILE);
+			Element root = doc.getRootElement();
+			List<Element> users = root.getChildren("User");
+			for(Element el : users){
+				String name = el.getAttributeValue("name");
+				String pass = el.getChildText("Pass");
+				MyUser user = new MyUser(name, pass);
+				userList.add(user);
+			}
+		} catch (JDOMException e) {
+			Debug.out("Fehler beim Datenimport mit JDOM [MD_Login/readConfigFile] F1");
+		} catch (IOException e) {
+			Debug.out("Fehler beim Datenimport mit JDOM [MD_Login/readConfigFile] F2");
+		}
+		return true;
 	}
 	
 }

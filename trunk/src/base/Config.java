@@ -42,6 +42,13 @@ public class Config implements ISqlSource {
 	}
 	
 	public void Init(){
+		Framework.FW().addModule(MD_Login.getInstance(), true);
+		Framework.FW().addModule(MD_User.getInstance());
+		Framework.FW().setState(StateMan.SM().getState(StateMan.INITOK));
+	}
+	
+	/*
+	public void Init(){
 		//liest konfigurationsdatei ein
 		//basisconfig -> config.ini
 		try {
@@ -57,15 +64,16 @@ public class Config implements ISqlSource {
 		//TODO: hier ist ein Variationspunkt (Marketing!!!)
 		//Module hinzufügen
 		Framework.FW().addModule(MD_Login.getInstance(), true);
-		Framework.FW().addModule(MD_Billing.getInstance());
-		Framework.FW().addModule(MD_Customer.getInstance());
-		Framework.FW().addModule(MD_ProductManager.getInstance());
-		Framework.FW().addModule(MD_User.getInstance());
-		Framework.FW().addModule(MD_Orders.getInstance());
+		//Framework.FW().addModule(MD_Billing.getInstance());
+		//Framework.FW().addModule(MD_Customer.getInstance());
+		//Framework.FW().addModule(MD_ProductManager.getInstance());
+		//Framework.FW().addModule(MD_User.getInstance());
+		//Framework.FW().addModule(MD_Orders.getInstance());
 		
 		Framework.FW().setState(StateMan.SM().getState(StateMan.INITOK));
 		
 	}
+	*/
 	
 	public static Config getInstance(){
 		if(instance == null){

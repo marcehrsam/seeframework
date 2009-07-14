@@ -75,4 +75,10 @@ public class MD_Main extends AbstractModule {
 		return ret;
 	}
 
+	@Override
+	public boolean readConfigFile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

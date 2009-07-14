@@ -68,4 +68,10 @@ public class MD_Orders extends AbstractModule{
 		
 	}
 
+	@Override
+	public boolean readConfigFile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
