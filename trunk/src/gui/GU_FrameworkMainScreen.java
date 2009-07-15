@@ -3,16 +3,13 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -21,8 +18,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EtchedBorder;
-
-import com.lowagie.text.pdf.FdfWriter;
 
 import tools.TO_JFrame;
 import base.AbstractModule;
@@ -114,7 +109,7 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 	}
 	
 	private void initContent(){
-		content = new MyPanel();
+		content = new JPanel();
 		AbstractModule mod = Framework.FW().getActiveModule();
 		content = mod.getContentScreen();
 		if(content!=null){
@@ -127,7 +122,7 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 	}
 	
 	private void initStatusBar(){
-		statusBar = new MyPanel(new GridBagLayout());
+		statusBar = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		ImageIcon icon = new ImageIcon("logo.png");
@@ -136,7 +131,7 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 		labIcon.setBorder(new EtchedBorder());
 		statusBar.add(labIcon, gbc);
 		
-		MyPanel panTxt = new MyPanel(new BorderLayout());
+		JPanel panTxt = new JPanel(new BorderLayout());
 		panTxt.setBorder(new EtchedBorder());
 		labMsg = new JLabel("Alles in Ordnung");
 		labMsg.setForeground(Color.GREEN);

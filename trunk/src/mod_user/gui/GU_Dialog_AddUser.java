@@ -10,11 +10,11 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import mod_user.action.ACT_BT_KLICK_AddUserCancel;
 import mod_user.action.ACT_BT_KLICK_AddUserOk;
-
 import tools.TO_JFrame;
 
 public class GU_Dialog_AddUser extends JDialog {
@@ -46,7 +46,7 @@ public class GU_Dialog_AddUser extends JDialog {
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		MyPanel namePanel = new MyPanel();
+		JPanel namePanel = new JPanel();
 		JLabel labName = new JLabel(NAME);
 		namePanel.add(labName);
 		txtName = new MyTextField(30);
@@ -54,7 +54,7 @@ public class GU_Dialog_AddUser extends JDialog {
 		gbc.gridy = 0;
 		getContentPane().add(namePanel, gbc);
 		
-		MyPanel passPanel = new MyPanel();
+		JPanel passPanel = new JPanel();
 		JLabel labPass = new JLabel(PASS);
 		passPanel.add(labPass);
 		jpfPass = new JPasswordField(30);
@@ -63,7 +63,7 @@ public class GU_Dialog_AddUser extends JDialog {
 		getContentPane().add(passPanel, gbc);
 		
 		
-		MyPanel btPanel = new MyPanel();
+		JPanel btPanel = new JPanel();
 		MyButton btOk = new MyButton(new ACT_BT_KLICK_AddUserOk(this));
 		MyButton btCancel = new MyButton(new ACT_BT_KLICK_AddUserCancel(this));
 		btPanel.add(btOk);

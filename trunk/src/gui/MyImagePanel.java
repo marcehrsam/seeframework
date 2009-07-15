@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.Observable;
 
 public class MyImagePanel extends MyPanel {
 
@@ -19,6 +20,11 @@ public class MyImagePanel extends MyPanel {
 
 	public void paintComponent(Graphics g) {
 		g.drawImage(img, 0, 0, null);
+	}
+
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

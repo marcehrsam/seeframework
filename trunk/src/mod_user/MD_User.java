@@ -1,7 +1,5 @@
 package mod_user;
 
-import gui.GU_FrameworkMainScreenDefaultContent;
-import gui.GU_MP_BlankScreen;
 import gui.MyPanel;
 
 import java.io.IOException;
@@ -11,11 +9,13 @@ import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.event.ListDataListener;
 
 import mod_user.action.ACT_MI_KLICK_AddUser;
 import mod_user.action.ACT_MI_KLICK_ChangePassword;
 import mod_user.action.ACT_MI_KLICK_Privileges;
+import mod_user.gui.GU_MP_UserStartScreen;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -37,6 +37,8 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	
 	private List<ListDataListener> listDataListenerList = null;
 	
+	private MyPanel currentScreen = null;
+	
 	private JMenu menu = null;
 	public final String MENUNAME = "Benutzer";
 	public final String CONFIGFILE = "user.dat";
@@ -44,7 +46,6 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	private MD_User(){
 		userList = new ArrayList<MyUser>();
 		listDataListenerList = new ArrayList<ListDataListener>();
-		
 	}
 	
 	public static MD_User getInstance(){
@@ -68,8 +69,12 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	}
 
 	@Override
-	public MyPanel getContentScreen() {
-		return new GU_MP_BlankScreen();
+	public JPanel getContentScreen() {
+		if(currentScreen!= null){
+			return currentScreen;
+		}else{
+			return new GU_MP_UserStartScreen();
+		}
 	}
 
 	@Override
@@ -114,19 +119,30 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	}
 
 	@Override
-	public void setContentScreen() {
-		// TODO Auto-generated method stub
-		
+	public void setContentScreen(MyPanel screen) {
+		//Observer entfernen
+		if(contentScreen!=null){
+			MD_User.getInstance().deleteObserver(contentScreen);
+		}
+		contentScreen = screen;
+		setChanged();
+		notifyObservers();
 	}
 
 	public boolean addUser(MyUser user){
 		boolean ok = userList.add(user);
 		setChanged();
 		notifyObservers();
-		Framework.FW().setState(StateMan.SM().getState(StateMan.USER_ADDED));
+		if(ok){
+			Framework.FW().setState(StateMan.SM().getState(StateMan.USER_ADDED));
+			Debug.out("User hinzugefügt");
+		}else{
+			Framework.FW().setState(StateMan.SM().getState(StateMan.ERR));
+		}
 		return ok;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean readConfigFile() {
 	

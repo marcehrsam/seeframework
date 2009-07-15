@@ -4,7 +4,6 @@ import gui.MyButton;
 import gui.MyImagePanel;
 import gui.MyPanel;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,16 +15,15 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EtchedBorder;
 
 import mod_login.MD_Login;
 import mod_login.action.ACT_BT_KLICK_Logon;
 import mod_user.MD_User;
+import mod_user.MyUser;
 import mod_user.User;
-import base.Framework;
-import base.MyState;
-import base.StateMan;
 import base.action.AC_ExitAction;
 
 public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
@@ -61,10 +59,10 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		GridBagConstraints constr = new GridBagConstraints();
 		constr.gridy = 0;
 		
-		MyPanel doublePanel = new MyPanel(new GridBagLayout());
+		JPanel doublePanel = new JPanel(new GridBagLayout());
 		doublePanel.setBorder(new EtchedBorder());
 		
-		MyPanel userPanel = new MyPanel();
+		JPanel userPanel = new JPanel();
 		//userPanel.setBorder(new EtchedBorder());
 		JLabel labUser = new JLabel(" Username:");
 		userPanel.add(labUser);
@@ -72,7 +70,7 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		userPanel.add(jcbUser);
 		doublePanel.add(userPanel, constr);
 		
-		MyPanel passwordPanel = new MyPanel();
+		JPanel passwordPanel = new JPanel();
 		//passwordPanel.setBorder(new EtchedBorder());
 		constr.gridy += 1;
 		JLabel pwdLabel = new JLabel("Passwort:");
@@ -89,7 +87,7 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		btLogon = new MyButton(new ACT_BT_KLICK_Logon(this));
 		btExit = new MyButton(new AC_ExitAction());
 		
-		MyPanel pan = new MyPanel();
+		JPanel pan = new JPanel();
 		pan.add(btLogon);
 		pan.add(btExit);
 		
@@ -108,6 +106,11 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		//return MD_Login.getInstance().comparePasswords(user, pass);
 		//TODO: Passwortabfrage aktivieren
 		return true;
+	}
+	
+	public MyUser getUser(){
+		MyUser user = (MyUser)jcbUser.getSelectedItem();
+		return user;
 	}
 
 	public void update(Observable o, Object arg) {

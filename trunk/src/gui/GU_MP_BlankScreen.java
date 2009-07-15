@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Observable;
+
 import javax.swing.JLabel;
 
 public class GU_MP_BlankScreen extends MyPanel{
@@ -11,6 +13,11 @@ public class GU_MP_BlankScreen extends MyPanel{
 	
 	public GU_MP_BlankScreen(){
 		this.add(new JLabel("Na, was haben wir wieder Falsch gemacht ;-)"));
+	}
+
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

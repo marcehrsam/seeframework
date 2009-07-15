@@ -29,6 +29,7 @@ public class StateMan {
 	public static final int LOGOUT_ERR = 7;
 	public static final int ACTION_CANCELED = 8;
 	public static final int USER_ADDED = 9;
+	public static final int TWICE_LOGGED_IN = 10;
 	
 	
 	private StateMan(){
@@ -44,6 +45,7 @@ public class StateMan {
 		states.put(LOGOUT_ERR, new MyState("Logout fehlgeschlagen.", Color.RED, NORMAL));
 		states.put(ACTION_CANCELED, new MyState("Aktion abgebrochen.", Color.YELLOW, NORMAL));
 		states.put(USER_ADDED, new MyState("Benutzer hinzugefügt.", Color.GREEN, NORMAL));
+		states.put(TWICE_LOGGED_IN, new MyState("Login fehlgeschlagen. Bitte loggen Sie sich zuerst aus.", Color.RED, NORMAL));
 	}
 	
 	public static StateMan SM(){

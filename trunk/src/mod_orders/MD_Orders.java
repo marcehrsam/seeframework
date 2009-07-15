@@ -5,6 +5,7 @@ import gui.MyPanel;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import base.AbstractModule;
 
@@ -41,7 +42,7 @@ public class MD_Orders extends AbstractModule{
 	}
 
 	@Override
-	public MyPanel getContentScreen() {
+	public JPanel getContentScreen() {
 		return new GU_MP_BlankScreen();
 	}
 
@@ -63,7 +64,7 @@ public class MD_Orders extends AbstractModule{
 	}
 
 	@Override
-	public void setContentScreen() {
+	public void setContentScreen(MyPanel screen) {
 		// TODO Auto-generated method stub
 		
 	}

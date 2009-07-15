@@ -61,7 +61,7 @@ public class GUI_DIALOG_ChooseCustomer extends JDialog implements ListSelectionL
 		getContentPane().add(customerList, BorderLayout.NORTH);
 		customerList.addListSelectionListener(this);
 		
-		btPanel = new MyPanel(new FlowLayout());
+		btPanel = new JPanel(new FlowLayout());
 		
 		if(holder!=null){
 			btOk = new MyButton(new AC_SetCustomer(holder, this));

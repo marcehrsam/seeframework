@@ -4,6 +4,7 @@ import gui.MyPanel;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import mod_billing.action.ACT_MI_KLICK_ChangeOrder;
 import mod_billing.action.ACT_MI_KLICK_CreateOrder;
@@ -66,13 +67,13 @@ public class MD_Billing extends AbstractModule{
 	}
 
 	@Override
-	public MyPanel getContentScreen() {
+	public JPanel getContentScreen() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setContentScreen() {
+	public void setContentScreen(MyPanel screen) {
 		// TODO Auto-generated method stub
 		
 	}
