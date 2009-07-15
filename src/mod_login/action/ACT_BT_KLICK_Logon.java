@@ -33,9 +33,14 @@ public class ACT_BT_KLICK_Logon extends AbstractAction {
 	
 	public void actionPerformed(ActionEvent arg0) {
 		if(screen.checkInput()){
-			Framework.FW().setState(StateMan.SM().getState(StateMan.LOGIN_OK));
-			//hier Variationspunkt!!!
-			Framework.FW().setActiveModule(MD_Main.getInstance());
+			boolean loginSuccesful = MD_Login.getInstance().login(screen.getUser());
+			if(loginSuccesful){
+				Framework.FW().setState(StateMan.SM().getState(StateMan.LOGIN_OK));
+				//hier Variationspunkt!!!
+				Framework.FW().setActiveModule(MD_Main.getInstance());
+			}else{
+				Framework.FW().setState(StateMan.SM().getState(StateMan.TWICE_LOGGED_IN));
+			}
 		}else{
 			Framework.FW().setState(StateMan.SM().getState(StateMan.LOGIN_ERR));
 		}

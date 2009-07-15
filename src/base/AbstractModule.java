@@ -4,6 +4,7 @@ import gui.MyPanel;
 import java.util.Observable;
 
 import javax.swing.JMenu;
+import javax.swing.JPanel;
 
 public abstract class AbstractModule extends Observable implements IModule {
 	
@@ -19,8 +20,8 @@ public abstract class AbstractModule extends Observable implements IModule {
 	public abstract void createMenu();
 	public abstract String getMenuName();
 	public abstract boolean stopAllActions();
-	public abstract MyPanel getContentScreen();
-	public abstract void setContentScreen();
+	public abstract JPanel getContentScreen();
+	public abstract void setContentScreen(MyPanel screen);
 	public abstract boolean readConfigFile();
 	
 }

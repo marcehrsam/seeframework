@@ -7,7 +7,9 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenu;
+import javax.swing.JPanel;
 
+import mod_login.MD_Login;
 import mod_mainmenu.action.ACT_BT_KLICK_setActiveModule;
 import base.AbstractModule;
 import base.Framework;
@@ -32,7 +34,7 @@ public class MD_Main extends AbstractModule {
 	}
 
 	@Override
-	public MyPanel getContentScreen() {
+	public JPanel getContentScreen() {
 		return getMainScreen();
 	}
 
@@ -49,7 +51,7 @@ public class MD_Main extends AbstractModule {
 	}
 
 	@Override
-	public void setContentScreen() {
+	public void setContentScreen(MyPanel screen) {
 		
 
 	}
@@ -61,8 +63,8 @@ public class MD_Main extends AbstractModule {
 	}
 	
 	//Hauptmenü
-	private MyPanel getMainScreen(){
-		MyPanel ret = new MyPanel();
+	private JPanel getMainScreen(){
+		JPanel ret = new JPanel();
 		//für jedes (registrierte) Modul werden buttons erzeugt.
 		for(AbstractModule mod : Framework.FW().getModules()){
 			JButton btn = new JButton(new ACT_BT_KLICK_setActiveModule(mod));
@@ -70,6 +72,9 @@ public class MD_Main extends AbstractModule {
             icon.setImage(icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 			btn.setIcon(icon);
 			ret.add(btn);
+			if(mod == MD_Login.getInstance()){
+				btn.setEnabled(false);
+			}
 		}
 		
 		return ret;

@@ -159,7 +159,7 @@ public class GUI_DIALOG_CreateCustomer extends JDialog implements FocusListener,
 		btOk.addKeyListener(this);
 		btCancel.addKeyListener(this);
 		
-		MyPanel content = new MyPanel(new GridBagLayout());
+		JPanel content = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.weightx = 1;
@@ -251,7 +251,7 @@ public class GUI_DIALOG_CreateCustomer extends JDialog implements FocusListener,
 		content.add(tfMail, gbc);
 		gbc.gridx--;
 		
-		MyPanel btArea = new MyPanel();
+		JPanel btArea = new JPanel();
 		btArea.add(btOk);
 		btArea.add(btCancel);
 		

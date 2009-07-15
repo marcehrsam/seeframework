@@ -11,6 +11,7 @@ import java.util.HashSet;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
@@ -150,13 +151,13 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 	}
 
 	@Override
-	public MyPanel getContentScreen() {
+	public JPanel getContentScreen() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setContentScreen() {
+	public void setContentScreen(MyPanel screen) {
 		// TODO Auto-generated method stub
 		
 	}

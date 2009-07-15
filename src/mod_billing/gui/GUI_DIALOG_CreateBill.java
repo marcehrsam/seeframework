@@ -49,9 +49,9 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	private Collection<JComponent> componentsToEnable = null; 
 	
 	//Components
-	private MyPanel customerArea;
-	private MyPanel itemArea;
-	private MyPanel btArea;
+	private JPanel customerArea;
+	private JPanel itemArea;
+	private JPanel btArea;
 	
 	//Buttons
 	private MyButton btChooseCustomer;
@@ -131,7 +131,7 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	private void InitializeCustomer(){
 		
 		//elemente instanziieren
-		customerArea = new MyPanel(new GridBagLayout());
+		customerArea = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		//customerArea.setBackground(Color.RED);
 		
@@ -271,7 +271,7 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	
 	private void InitializeBill(){
 		
-		itemArea = new MyPanel();
+		itemArea = new JPanel();
 		itemArea.setBackground(Color.BLUE);
 		
 		jspTable = new JScrollPane();
@@ -298,7 +298,7 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	
 	private void InitializeButtons(){
 		
-		btArea = new MyPanel();
+		btArea = new JPanel();
 
 		btOK = new MyButton(new ACT_BT_KLICK_OK_CreateBill(this, rechnung));
 		btCancel = new MyButton(new ACT_BT_KLICK_CANCEL_CreateBill(this));

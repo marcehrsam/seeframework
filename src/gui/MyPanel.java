@@ -2,10 +2,11 @@ package gui;
 
 import java.awt.Image;
 import java.awt.LayoutManager;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
-public class MyPanel extends AbstractPanel {
+public abstract class MyPanel extends AbstractPanel implements Observer{
 
 	/**
 	 * 

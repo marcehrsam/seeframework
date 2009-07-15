@@ -2,8 +2,6 @@ package mod_user;
 
 import java.util.Observable;
 
-import tools.Security;
-
 public abstract class User extends Observable{
 
 	private String userName = null;

@@ -9,6 +9,7 @@ import java.util.Collection;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import tools.SQL_Writer;
 
@@ -110,13 +111,13 @@ public class MD_ProductManager extends AbstractModule{
 	}
 
 	@Override
-	public MyPanel getContentScreen() {
+	public JPanel getContentScreen() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setContentScreen() {
+	public void setContentScreen(MyPanel screen) {
 		// TODO Auto-generated method stub
 		
 	}
