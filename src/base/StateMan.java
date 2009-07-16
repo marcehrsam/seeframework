@@ -30,6 +30,8 @@ public class StateMan {
 	public static final int ACTION_CANCELED = 8;
 	public static final int USER_ADDED = 9;
 	public static final int TWICE_LOGGED_IN = 10;
+	public static final int ACCESSGRANTED = 11;
+	public static final int ACCESSDENIED = 12;
 	
 	
 	private StateMan(){
@@ -43,9 +45,11 @@ public class StateMan {
 		states.put(NOUSERSELECTED, new MyState("Bitte wählen Sie einen Benutzer aus!", Color.RED, NORMAL));
 		states.put(LOGOUT_OK, new MyState("Logout erfolgreich.", Color.GREEN, NORMAL));
 		states.put(LOGOUT_ERR, new MyState("Logout fehlgeschlagen.", Color.RED, NORMAL));
-		states.put(ACTION_CANCELED, new MyState("Aktion abgebrochen.", Color.YELLOW, NORMAL));
+		states.put(ACTION_CANCELED, new MyState("Aktion abgebrochen.", Color.BLUE, NORMAL));
 		states.put(USER_ADDED, new MyState("Benutzer hinzugefügt.", Color.GREEN, NORMAL));
 		states.put(TWICE_LOGGED_IN, new MyState("Login fehlgeschlagen. Bitte loggen Sie sich zuerst aus.", Color.RED, NORMAL));
+		states.put(ACCESSGRANTED, new MyState("Aktion zugelassen.", Color.GREEN, NIEDRIG));
+		states.put(ACCESSDENIED, new MyState("Aktion nicht zugelassen.", Color.RED, HOCH));
 	}
 	
 	public static StateMan SM(){

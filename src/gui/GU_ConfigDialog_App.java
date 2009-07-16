@@ -4,8 +4,6 @@ import java.awt.Dimension;
 
 import javax.swing.JDialog;
 
-import base.Framework;
-
 import tools.TO_JFrame;
 
 public class GU_ConfigDialog_App extends JDialog {

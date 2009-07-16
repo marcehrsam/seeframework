@@ -5,6 +5,7 @@ import gui.MyPanel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JMenu;
@@ -27,7 +28,7 @@ import base.AbstractModule;
 import base.Framework;
 import base.StateMan;
 
-public class MD_User extends AbstractModule implements ComboBoxModel{
+public class MD_User extends AbstractModule implements ComboBoxModel, UserEventSource{
 
 	private List<MyUser> userList = null;
 	
@@ -36,6 +37,7 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	private static MD_User instance = null;
 	
 	private List<ListDataListener> listDataListenerList = null;
+	private List<UserEventListener> userEventListenerList = null;
 	
 	private MyPanel currentScreen = null;
 	
@@ -46,6 +48,8 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 	private MD_User(){
 		userList = new ArrayList<MyUser>();
 		listDataListenerList = new ArrayList<ListDataListener>();
+		userEventListenerList = new ArrayList<UserEventListener>();
+		this.addUserEventListener(Framework.FW());
 	}
 	
 	public static MD_User getInstance(){
@@ -134,12 +138,20 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 		setChanged();
 		notifyObservers();
 		if(ok){
+			userAddedEvent(user);
 			Framework.FW().setState(StateMan.SM().getState(StateMan.USER_ADDED));
 			Debug.out("User hinzugefügt");
 		}else{
 			Framework.FW().setState(StateMan.SM().getState(StateMan.ERR));
 		}
 		return ok;
+	}
+	
+	public boolean removeUser(MyUser user){
+		userRemovedEvent(user);
+		setChanged();
+		notifyObservers();
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -157,6 +169,9 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 				String name = el.getAttributeValue("name");
 				String pass = el.getChildText("Pass");
 				MyUser user = new MyUser(name, pass);
+				String type = el.getChildText("Rights");
+				Set<Integer> rights = PrivilegeProfiles.P().getRights(type);
+				user.setRights(rights);
 				userList.add(user);
 			}
 		} catch (JDOMException e) {
@@ -166,5 +181,26 @@ public class MD_User extends AbstractModule implements ComboBoxModel{
 		}
 		return true;
 	}
+
+	public void addUserEventListener(UserEventListener l) {
+		userEventListenerList.add(l);
+	}
+
+	public void removeUserEventListener(UserEventListener l) {
+		userEventListenerList.remove(l);	
+	}
+
+	public void userAddedEvent(User user) {
+		for(UserEventListener l : userEventListenerList){
+			l.UserAdded(user);
+		}
+	}
+
+	public void userRemovedEvent(User user) {
+		for(UserEventListener l : userEventListenerList){
+			l.UserRemoved(user);
+		}
+	}
+	
 	
 }

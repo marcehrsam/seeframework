@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import javax.swing.JOptionPane;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEditSupport;
 
 import mod_login.MD_Login;
+import mod_user.User;
+import mod_user.UserEventListener;
 import tools.Debug;
 import undoRedo.UndoAdaptor;
 
-public class Framework extends Observable{
+public class Framework extends Observable implements UserEventListener{
 
 	//the framework
 	private static Framework instance = null;
@@ -163,6 +166,17 @@ public class Framework extends Observable{
 		fwState = status;
 		setChanged();
 		notifyObservers();
+	}
+
+	public void UserAdded(User user) {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, "UserAdded");
+		
+	}
+
+	public void UserRemoved(User user) {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, "UserRemoved");		
 	}
 	
 }

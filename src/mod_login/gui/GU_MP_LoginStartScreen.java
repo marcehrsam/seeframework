@@ -23,6 +23,7 @@ import mod_login.MD_Login;
 import mod_login.action.ACT_BT_KLICK_Logon;
 import mod_user.MD_User;
 import mod_user.MyUser;
+import mod_user.PrivilegeProfiles;
 import mod_user.User;
 import base.action.AC_ExitAction;
 
@@ -102,10 +103,14 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 			return false;
 		}
 		User user = (User)jcbUser.getSelectedItem();
-		String pass = new String(pwdField.getPassword());
-		//return MD_Login.getInstance().comparePasswords(user, pass);
-		//TODO: Passwortabfrage aktivieren
-		return true;
+		//abfrage, ob nutzer zum login berechtigt ist
+		if(user.grantAccess(PrivilegeProfiles.P().LOGIN)){
+			String pass = new String(pwdField.getPassword());
+			//return MD_Login.getInstance().comparePasswords(user, pass);
+			//TODO: Passwortabfrage aktivieren
+			return true;
+		}
+		return false;
 	}
 	
 	public MyUser getUser(){
