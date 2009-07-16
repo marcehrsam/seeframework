@@ -1,20 +1,10 @@
 package base;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import mod_billing.MD_Billing;
-import mod_customer.MD_Customer;
 import mod_login.MD_Login;
-import mod_orders.MD_Orders;
-import mod_products.MD_ProductManager;
 import mod_user.MD_User;
-
-import tools.Debug;
 
 public class Config implements ISqlSource {
 	
@@ -26,8 +16,8 @@ public class Config implements ISqlSource {
 	public final String ERROR_LOG = "error.log";
 	
 	//strings für config.ini
-	private final String DROPLINE = "Zeile übersprungen";
-	private final String DROPNODE = "Knoten übersprungen";
+	//private final String DROPLINE = "Zeile übersprungen";
+	//private final String DROPNODE = "Knoten übersprungen";
 	private final String DB_USER = "db_user";
 	private final Object DB_PASS = "db_pass";
 	private final Object DB_PATH = "db_path";
@@ -82,7 +72,7 @@ public class Config implements ISqlSource {
 		return instance;
 	}
 	
-	private void readConfigIni() throws IOException{
+/*	private void readConfigIni() throws IOException{
 		BufferedReader reader = new BufferedReader(new FileReader(CONFIG_INI));
 		
 		String input = "";
@@ -118,6 +108,7 @@ public class Config implements ISqlSource {
 		
 	}
 
+*/
 	/* (non-Javadoc)
 	 * @see base.ISqlSource#getDbUser()
 	 */

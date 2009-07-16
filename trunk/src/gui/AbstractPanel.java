@@ -6,6 +6,11 @@ import javax.swing.JPanel;
 
 public abstract class AbstractPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6798490335631726443L;
+
 	public AbstractPanel(boolean isDoubleBuffered) {
 		super(isDoubleBuffered);
 	}
