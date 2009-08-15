@@ -10,7 +10,6 @@ public class MainClass{
 	public static void main(String[] args) {
 		GU_FrameworkMainScreen wnd = new GU_FrameworkMainScreen();
 		wnd.run();
-		//WiiClass myWiiClass = new WiiClass();
 		
 		
 	}

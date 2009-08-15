@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import org.apache.derby.impl.sql.compile.SetTransactionIsolationNode;
+
 import mod_customer.AbstractCustomer;
 import mod_products.MD_ProductManager;
 
@@ -94,13 +96,13 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		rechnung.put(AUFTRAG_ID, "200609-0001");
 		rechnung.put(KUNDE_ID, "Testkunde");
 		rechnung.put(ANREDE, "Herr");
-		rechnung.put(NAME, "Mustermann");
-		rechnung.put(VORNAME, "Max");
-		rechnung.put(STRASSE, "Musterstr.");
-		rechnung.put(NUMMER, "123");
-		rechnung.put(ZUSATZZEILE, "Musterteil");
-		rechnung.put(PLZ, "01234");
-		rechnung.put(ORT, "Musterstadt");
+		rechnung.put(NAME, "Treuger");
+		rechnung.put(VORNAME, "Horst");
+		rechnung.put(STRASSE, "In den Folgen");
+		rechnung.put(NUMMER, "18");
+		rechnung.put(ZUSATZZEILE, "");
+		rechnung.put(PLZ, "98704");
+		rechnung.put(ORT, "Langewiesen");
 		rechnung.put(DATUM, "05.07.2009");
 	}
 	
@@ -173,6 +175,12 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		cb.showText("Deutsche Kreditbank Berlin");
 		
 		cb.endText();
+		
+		cb.beginText();
+		cb.setTextMatrix(190, 280);
+		cb.showText("(Alle Beträge inkl. 19% MWSt)");
+		cb.endText();
+		
 		/*
 		cb.beginText();
 		cb.setFontAndSize(bf, 8);
@@ -610,7 +618,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 			case 0:  break;
 			//case 1:  setProduct(((ArrayList<Position>)positionen).get(rowIndex), (Produkt)MD_ProductManager.getInstance().getProdukt((String)value));
 			case 1:  ((ArrayList<Position>)positionen).get(rowIndex).setArtNr((String)value);break;
-			case 2:  ((ArrayList<Position>)positionen).get(rowIndex).setAnzahl(Integer.parseInt((String)value)); break;
+			case 2:  ((ArrayList<Position>)positionen).get(rowIndex).setAnzahl(Double.parseDouble((String)value)); break;
 			case 3:  ((ArrayList<Position>)positionen).get(rowIndex).setBezeichnung((String)value); break;
 			case 4:  ((ArrayList<Position>)positionen).get(rowIndex).setEinzelpreis(Double.parseDouble((String)value)); break;
 			default: break;
