@@ -20,6 +20,7 @@ public class ACT_MI_KLICK_NewBill extends AbstractAction {
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
+		@SuppressWarnings("unused")
 		GUI_DIALOG_CreateBill dialog = new GUI_DIALOG_CreateBill();
 		//dialog.setVisible(true);
 		

@@ -26,6 +26,7 @@ public class ACT_BT_KLICK_CreateCustomer extends AbstractAction {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		//hier schnittstelle zu anderen modul einbinden!!!
+		@SuppressWarnings("unused")
 		GUI_DIALOG_CreateCustomer dialog = new GUI_DIALOG_CreateCustomer(holder);
 		
 		

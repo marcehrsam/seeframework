@@ -15,6 +15,7 @@ public class ACT_BT_KLICK_ChangeCustomer extends AbstractAction {
 
 	public final String TITLE = "Kunde ändern";
 	
+	@SuppressWarnings("unused")
 	private ICustomerHolder holder;
 	
 	public ACT_BT_KLICK_ChangeCustomer(ICustomerHolder holder){

@@ -11,14 +11,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import tools.SQL_Writer;
-
-import mod_customer.Customer;
 import mod_products.action.ACT_MI_KLICK_DeleteProduct;
 import mod_products.action.ACT_MI_KLICK_EditProduct;
 import mod_products.action.ACT_MI_KLICK_NewProduct;
 import model_test.AbstractProdukt;
 import model_test.Produkt;
+import tools.SQL_Writer;
 import base.AbstractModule;
 
 public class MD_ProductManager extends AbstractModule{

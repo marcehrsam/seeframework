@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EtchedBorder;
 
-import mod_login.MD_Login;
 import mod_login.action.ACT_BT_KLICK_Logon;
 import mod_user.MD_User;
 import mod_user.MyUser;
@@ -68,6 +67,7 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		JLabel labUser = new JLabel(" Username:");
 		userPanel.add(labUser);
 		jcbUser = new JComboBox(MD_User.getInstance());
+		jcbUser.setPreferredSize(new Dimension(150, 20));
 		userPanel.add(jcbUser);
 		doublePanel.add(userPanel, constr);
 		
@@ -105,6 +105,7 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		User user = (User)jcbUser.getSelectedItem();
 		//abfrage, ob nutzer zum login berechtigt ist
 		if(user.grantAccess(PrivilegeProfiles.P().LOGIN)){
+			@SuppressWarnings("unused")
 			String pass = new String(pwdField.getPassword());
 			//return MD_Login.getInstance().comparePasswords(user, pass);
 			//TODO: Passwortabfrage aktivieren

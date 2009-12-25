@@ -2,7 +2,11 @@ package mod_mainmenu;
 
 import gui.MyPanel;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -64,14 +68,20 @@ public class MD_Main extends AbstractModule {
 	
 	//Hauptmenü
 	private JPanel getMainScreen(){
-		JPanel ret = new JPanel();
+		JPanel ret = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(10, 0, 0, 0);
 		//für jedes (registrierte) Modul werden buttons erzeugt.
 		for(AbstractModule mod : Framework.FW().getModules()){
 			JButton btn = new JButton(new ACT_BT_KLICK_setActiveModule(mod));
+			btn.setPreferredSize(new Dimension(200, 60));
             ImageIcon icon = new ImageIcon("logo2.png");
             icon.setImage(icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 			btn.setIcon(icon);
-			ret.add(btn);
+			gbc.gridy++;
+			ret.add(btn, gbc);
 			if(mod == MD_Login.getInstance()){
 				btn.setEnabled(false);
 			}

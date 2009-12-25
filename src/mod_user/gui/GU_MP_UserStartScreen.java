@@ -19,6 +19,7 @@ public class GU_MP_UserStartScreen extends MyPanel implements Observer {
 	 */
 	private static final long serialVersionUID = 8517024572496130718L;
 
+	@SuppressWarnings("unused")
 	private JPanel content = null;
 	
 	public GU_MP_UserStartScreen(){
