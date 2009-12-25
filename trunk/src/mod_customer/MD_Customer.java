@@ -32,6 +32,7 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 	
 	private Collection<Customer> db = null;
 	
+	@SuppressWarnings("unused")
 	private AbstractCustomer tempCustomer = null;
 	
 	private Collection<ListDataListener> listDataListenerList = null;

@@ -1,7 +1,6 @@
 package mod_customer.gui;
 
 import gui.MyButton;
-import gui.MyPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -10,14 +9,12 @@ import java.awt.FlowLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import mod_billing.action.ACT_BT_KLICK_CloseDialog;
 import mod_customer.AbstractCustomer;
-import mod_customer.Customer;
 import mod_customer.MD_Customer;
 import model_test.ICustomerHolder;
 import tools.TO_JFrame;
@@ -36,6 +33,7 @@ public class GUI_DIALOG_ChooseCustomer extends JDialog implements ListSelectionL
 	private JList customerList = null;
 	
 	private AbstractCustomer kunde = null;
+	@SuppressWarnings("unused")
 	private Container parent = null;
 	private ICustomerHolder holder = null;
 	

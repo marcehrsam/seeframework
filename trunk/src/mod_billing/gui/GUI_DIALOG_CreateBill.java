@@ -1,7 +1,6 @@
 package mod_billing.gui;
 
 import gui.MyButton;
-import gui.MyPanel;
 import gui.MyTextField;
 
 import java.awt.BorderLayout;
@@ -72,7 +71,9 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	private MyTextField tfCustomerZipCode;
 	private MyTextField tfCustomerCity;
 	private MyTextField tfCustomerID;
+	@SuppressWarnings("unused")
 	private MyTextField tfBillDate;
+	@SuppressWarnings("unused")
 	private MyTextField tfBillNumber;
 	
 	//Labels

@@ -1,7 +1,6 @@
 package mod_user.gui;
 
 import gui.MyButton;
-import gui.MyPanel;
 import gui.MyTextField;
 
 import java.awt.Dimension;

@@ -4,6 +4,12 @@ import javax.swing.JTable;
 
 public class MyRechnungTable extends JTable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3323745117990888524L;
+
+	@SuppressWarnings("unused")
 	private Rechnung rechnung;
 	
 	public final String POS = "PosNr";
@@ -12,7 +18,8 @@ public class MyRechnungTable extends JTable {
 	public final String BEZ = "Bezeichnung";
 	public final String PRE = "Einzelpreis";
 	
-    private final String[] columnNames = {POS, ART, ANZ, BEZ, PRE};
+    @SuppressWarnings("unused")
+	private final String[] columnNames = {POS, ART, ANZ, BEZ, PRE};
 
 	
 	public MyRechnungTable(Rechnung rechnung){

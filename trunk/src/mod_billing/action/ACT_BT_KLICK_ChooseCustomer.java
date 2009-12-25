@@ -29,6 +29,7 @@ public class ACT_BT_KLICK_ChooseCustomer extends AbstractAction {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		//TODO: Action übergeben
+		@SuppressWarnings("unused")
 		GUI_DIALOG_ChooseCustomer dialog = new GUI_DIALOG_ChooseCustomer(parent, holder);
 
 	}

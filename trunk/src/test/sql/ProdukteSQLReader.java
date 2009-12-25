@@ -64,6 +64,7 @@ public class ProdukteSQLReader {
 	 */
 	public static void main(String[] args) {
 
+		@SuppressWarnings("unused")
 		ProdukteSQLReader reader = new ProdukteSQLReader();		
 
 	}

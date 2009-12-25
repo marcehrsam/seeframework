@@ -11,6 +11,11 @@ import base.StateMan;
 
 public class ACT_MI_KLICK_Logout extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6450148400149234639L;
+	
 	public final String LOGOUT = "Logout";
 	
 	public ACT_MI_KLICK_Logout(){

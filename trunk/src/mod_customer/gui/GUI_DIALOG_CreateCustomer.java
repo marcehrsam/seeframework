@@ -1,7 +1,6 @@
 package mod_customer.gui;
 
 import gui.MyButton;
-import gui.MyPanel;
 import gui.MyTextField;
 
 import java.awt.BorderLayout;

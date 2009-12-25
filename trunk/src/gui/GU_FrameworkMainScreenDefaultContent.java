@@ -13,6 +13,7 @@ public class GU_FrameworkMainScreenDefaultContent extends JPanel implements Obse
 	 */
 	private static final long serialVersionUID = 1171186630502448393L;
 	
+	@SuppressWarnings("unused")
 	private GU_FrameworkMainScreen mainScreen = null;
 	
 	public GU_FrameworkMainScreenDefaultContent(GU_FrameworkMainScreen ms){

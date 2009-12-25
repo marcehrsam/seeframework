@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+@SuppressWarnings("serial")
 public class ACT_MI_KLICK_Privileges extends AbstractAction {
 
 	public final String PRIVILEGES = "Benutzerrechte ändern";

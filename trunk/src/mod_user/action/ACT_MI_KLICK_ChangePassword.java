@@ -6,6 +6,11 @@ import javax.swing.AbstractAction;
 
 public class ACT_MI_KLICK_ChangePassword extends AbstractAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4185516289006641121L;
+	
 	public final String CHANGEPWD = "Eigenes Passwort ändern";
 	
 	public ACT_MI_KLICK_ChangePassword(){

@@ -1,17 +1,17 @@
 package mod_user.action;
 
-import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.Icon;
 
-import mod_user.MD_User;
-import mod_user.MyUser;
 import mod_user.gui.GU_Dialog_AddUser;
 
 public class ACT_MI_KLICK_AddUser extends AbstractAction{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3345958528674121006L;
 	
 	public final String ADDUSER = "Benutzer hinzufügen";
 	
@@ -20,6 +20,7 @@ public class ACT_MI_KLICK_AddUser extends AbstractAction{
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
+		@SuppressWarnings("unused")
 		GU_Dialog_AddUser dialog = new GU_Dialog_AddUser();
 	}
 

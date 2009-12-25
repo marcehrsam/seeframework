@@ -15,12 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import org.apache.derby.impl.sql.compile.SetTransactionIsolationNode;
-
 import mod_customer.AbstractCustomer;
-import mod_products.MD_ProductManager;
 
-import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
@@ -626,6 +622,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 		Iterator<TableModelListener> it = tableModelListenerList.iterator();
 		while(it.hasNext()){
+			@SuppressWarnings("unused")
 			TableModelListener l = (TableModelListener)it.next();
 			setChanged();
 			notifyObservers();
@@ -634,6 +631,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void setProduct(Position altPos, Produkt product){
 		((ArrayList<Position>)positionen).remove(altPos);
 		Position neuPos = new Position(product, altPos.getAnzahl());
