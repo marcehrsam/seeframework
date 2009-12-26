@@ -1,24 +1,17 @@
 package main;
-import java.awt.AWTException;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Rectangle;
-import java.awt.Robot;
 import java.awt.Toolkit;
 import java.io.File;
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 /*
  * Created on 20.02.2004
@@ -33,9 +26,17 @@ import javax.swing.JLabel;
  * Preferences - Java - Code Generation - Code and Comments
  */
 public class SplashScreen extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3972149106050237914L;
+	
 	private int defaultScreenWidthMargin = 0;//50
 	private int defaultScreenHeightMargin = 0;//37
 	private Timer timer;
+	
+	final JProgressBar progBar;
+	
 	/**
 	 * @param file
 	 */
@@ -50,6 +51,7 @@ public class SplashScreen extends JFrame {
 		int frmY = ((int) d.getHeight() - (h + defaultScreenHeightMargin)) / 2;
 		setLocation(frmX, frmY);
 		
+		this.setBackground(Color.WHITE);
 		
 		JLabel text1 = new JLabel("SEE");
 		text1.setFont(new Font("Arial",Font.BOLD , 30));
@@ -61,47 +63,45 @@ public class SplashScreen extends JFrame {
 		text2.setBounds(70, 10, 300, 50);
 		this.add(text2);
 		
-		JLabel loading = new JLabel("lädt...");
+		JLabel text3 = new JLabel("(Alpha 0)");
+		text3.setFont(new Font("Arial",Font.BOLD , 10));
+		text3.setForeground(Color.RED);
+		text3.setBounds(170, 10, 300, 50);
+		this.add(text3);
+		
+		/*
+		 JLabel loading = new JLabel("lädt...");
+		 
 		loading.setBounds(0, 380, 400, 10);
 		this.add(loading);
-		
-		Image img = new ImageIcon("d:/logo.png").getImage().getScaledInstance(400, 400, Image.SCALE_FAST);
-		JLabel bild = new JLabel(new ImageIcon(img));
-		bild.setBounds(0,0,400,400);
-		this.add(bild);
-		
-		
-		
-		/*JButton bt = new JButton("Test");
-		bt.setPreferredSize(new Dimension(100,100));
-		bt.setBackground(Color.RED);
-		this.add(bt, BorderLayout.SOUTH);
 		*/
 		
-		setVisible(true);
-		/*if (picture == null)
-			picture = createImage(w, h);
-		 */
-		timer = new Timer();
-		timer.schedule(new ExitTimerTask(this), millis);
-		// TODO Auto-generated constructor stub
 		
+		
+		progBar = new JProgressBar();
+		progBar.setBounds(0, 380, 400, 20);
+		this.add(progBar);
+		
+		Image img = new ImageIcon("d:/logo.png").getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+		JLabel bild = new JLabel(new ImageIcon(img));
+		bild.setBackground(Color.WHITE);
+		bild.setBounds(0,0,400,400);
+		this.add(bild);
+				
+		
+		  this.setAlwaysOnTop(true);
+		  
+		
+		setVisible(true);
+		timer = new Timer();
+		timer.schedule(new ExitTimerTask(this), millis);		
 		
 	}
 	public static void main(String[] args) {
 		new SplashScreen(new File("d:/logo.png"), 400, 400, 5000l);
+		
 	}
-	/*
-	   public void paint(Graphics g) {
-		if (picture != null && capture != null) {
-			capture.getGraphics().drawImage(picture,
-					0 + defaultScreenWidthMargin / 2,
-					0 + defaultScreenHeightMargin / 2, this);
-			g.drawImage(capture, 0, 0, this);
-			g.drawString("Test", 50, 50);
-		}
-	}
-	*/
+	
 	class ExitTimerTask extends TimerTask {
 		private JFrame frm;
 		public ExitTimerTask(JFrame frm) {
@@ -113,8 +113,21 @@ public class SplashScreen extends JFrame {
 		 * @see java.util.TimerTask#run()
 		 */
 		public void run() {
-			// TODO Auto-generated method stub
+			Runnable runnable = new Runnable() {
+			    public void run() {
+			    	for (int i = 0; i < 100; i++) {
+			        // Als Beispiel für eine
+			        // rechenintensive Operation
+			        try { Thread.sleep(10); } 
+			        catch (InterruptedException ex) {}
+			        progBar.setValue(i);
+			     }
+			  }};
+			//runnable.run();
+			//Thread t1 = new Thread(runnable);
+			//t1.run();
 			MainClass.main(null);
+			
 			frm.setVisible(false);
 			frm.dispose();
 			//System.exit(0);

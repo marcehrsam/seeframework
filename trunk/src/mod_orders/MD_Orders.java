@@ -7,6 +7,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import mod_orders.gui.GU_MP_OrdersStartScreen;
+
 import base.AbstractModule;
 
 public class MD_Orders extends AbstractModule{
@@ -43,7 +45,7 @@ public class MD_Orders extends AbstractModule{
 
 	@Override
 	public JPanel getContentScreen() {
-		return new GU_MP_BlankScreen();
+		return new GU_MP_OrdersStartScreen();
 	}
 
 	@Override
