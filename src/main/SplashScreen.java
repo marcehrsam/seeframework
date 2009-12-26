@@ -115,15 +115,11 @@ public class SplashScreen extends JFrame {
 		public void run() {
 			Runnable runnable = new Runnable() {
 			    public void run() {
-			    	for (int i = 0; i < 100; i++) {
-			        // Als Beispiel für eine
-			        // rechenintensive Operation
-			        try { Thread.sleep(10); } 
-			        catch (InterruptedException ex) {}
-			        progBar.setValue(i);
-			     }
+			    	progBar.setIndeterminate(true);
+			    	progBar.setString("Programm wird gestartet...");
+			    	progBar.setStringPainted(true);
 			  }};
-			//runnable.run();
+			runnable.run();
 			//Thread t1 = new Thread(runnable);
 			//t1.run();
 			MainClass.main(null);

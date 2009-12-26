@@ -10,6 +10,7 @@ import mod_billing.action.ACT_MI_KLICK_ChangeOrder;
 import mod_billing.action.ACT_MI_KLICK_CreateOrder;
 import mod_billing.action.ACT_MI_KLICK_NewBill;
 import mod_billing.action.ACT_MI_KLICK_ShowOrders;
+import mod_billing.gui.GUI_DIALOG_BillingStartScreen;
 import base.AbstractModule;
 
 /**
@@ -21,6 +22,8 @@ import base.AbstractModule;
 public class MD_Billing extends AbstractModule{
 
 	private static MD_Billing instance = null;
+	
+	
 	
 	public final String NEWBILL = "Neue Rechnung anlegen";
 	public final String BILL = "Rechnung";
@@ -63,13 +66,13 @@ public class MD_Billing extends AbstractModule{
 	@Override
 	public boolean stopAllActions() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public JPanel getContentScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return new GUI_DIALOG_BillingStartScreen();
 	}
 
 	@Override
