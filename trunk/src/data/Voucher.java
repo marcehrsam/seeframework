@@ -42,9 +42,9 @@ public abstract class Voucher {
 		return voucherNumber;
 	}
 	
-	public void export(){
+	public void save(){
 		if(exporter!=null)
-			exporter.export();
+			exporter.save();
 	}
 	
 }
