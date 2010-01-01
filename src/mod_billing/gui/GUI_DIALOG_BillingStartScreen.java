@@ -7,11 +7,15 @@ import java.util.Observable;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import mod_billing.MD_Billing;
 import mod_billing.action.ACT_MI_KLICK_NewBill;
 import mod_mainmenu.MD_Main;
 import mod_mainmenu.action.ACT_BT_KLICK_setActiveModule;
+
+import com.lowagie.text.Table;
 
 public class GUI_DIALOG_BillingStartScreen extends MyPanel{
 
@@ -30,6 +34,17 @@ public class GUI_DIALOG_BillingStartScreen extends MyPanel{
 		
 		JPanel centerPanel = new JPanel();
 		add(centerPanel, BorderLayout.CENTER);
+		
+		JScrollPane tablePanel = new JScrollPane();
+		centerPanel.add(tablePanel);
+		
+		JTable billsTable = new JTable(MD_Billing.getInstance());
+		billsTable.addMouseListener(MD_Billing.getInstance());
+		billsTable.addKeyListener(MD_Billing.getInstance());
+		tablePanel.setViewportView(billsTable);
+		
+		
+		
 		
 		JPanel southPanel = new JPanel();
 		add(southPanel, BorderLayout.SOUTH);
