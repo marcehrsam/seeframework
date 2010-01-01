@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -18,7 +17,6 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -26,25 +24,25 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import mod_billing.action.ACT_BT_KLICK_ActivateFields;
+import mod_billing.action.ACT_BT_KLICK_ActivateFieldsEdit;
 import mod_billing.action.ACT_BT_KLICK_CANCEL_CreateBill;
 import mod_billing.action.ACT_BT_KLICK_ChangeCustomer;
 import mod_billing.action.ACT_BT_KLICK_ChooseCustomer;
 import mod_billing.action.ACT_BT_KLICK_CreateCustomer;
-import mod_billing.action.ACT_BT_KLICK_OK_CreateBill;
 import mod_billing.action.ACT_BT_KLICK_SAVE_CreateBill;
 import model_test.MyRechnungTable;
 import model_test.Rechnung;
 import tools.TO_JFrame;
 
-public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusListener, KeyListener{
+public class GUI_DIALOG_EditBill extends JDialog implements Observer, FocusListener, KeyListener{
+
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6764656117948502040L;
+	private static final long serialVersionUID = -536935628140210845L;
 
-	public final String TITLE = "Rechnung anlegen";
+	public final String TITLE = "Rechnung ändern";
 	
 	//objects to enable
 	private Collection<JComponent> componentsToEnable = null; 
@@ -107,14 +105,14 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	//instance->Rechnung
 	private Rechnung rechnung;
 	
-	public GUI_DIALOG_CreateBill(){
+	public GUI_DIALOG_EditBill(Rechnung rechnung){
 		setTitle(TITLE);
 		setLayout(new BorderLayout());
 		setSize(SIZE);
 		setModal(true);
 		TO_JFrame.getInstance().centerJFrame(this);
 		
-		rechnung = new Rechnung();
+		this.rechnung = rechnung;
 		componentsToEnable = new ArrayList<JComponent>();
 		InitializeComponents();
 		disableCustomerFields();
@@ -274,60 +272,27 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	
 	private void InitializeBill(){
 		
-		itemArea = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		
-//		itemArea.setBackground(Color.BLUE);
+		itemArea = new JPanel();
+		itemArea.setBackground(Color.BLUE);
 		
 		jspTable = new JScrollPane();
-		jspTable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		jspTable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		tabPositions = new MyRechnungTable(null);
 		tabPositions.setModel(rechnung);
+
+		jspTable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jspTable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	
 		rechnung.setAnrede(rechnung.getAnrede());
-		jspTable.setViewportView(tabPositions);
-		gbc.gridy++;
-		gbc.fill = GridBagConstraints.BOTH;
-		itemArea.add(jspTable, gbc);
-		
-		
+			
 		//Bereich für Items
-
-		JPanel editButtons = new JPanel(new GridLayout(1,6));
-		gbc.gridy++;
-		itemArea.add(editButtons, gbc);
+		jlDescription = new JLabel(DESC);
+		jlSum = new JLabel("€: 5,00");
 		
-		JButton addButton = new JButton("+");
-		editButtons.add(addButton);
+		itemArea.add(jlDescription);
+		itemArea.add(jspTable);
+		itemArea.add(jlSum);
 		
-		JButton remButton = new JButton("-");
-		editButtons.add(remButton);
-		
-		JButton selectButton = new JButton("Artikel");
-		editButtons.add(selectButton);
-		
-		JPanel tempPanel1 = new JPanel();
-		editButtons.add(tempPanel1);
-		
-		JPanel tempPanel2 = new JPanel();
-		editButtons.add(tempPanel2);
-		
-		JPanel tempPanel3 = new JPanel();
-		editButtons.add(tempPanel3);
-		
-		jlDescription = new JLabel(/*DESC*/);
-		jlDescription.setPreferredSize(new Dimension(1, 100));
-		gbc.gridy++;
-		itemArea.add(jlDescription, gbc);
-		
-		jlSum = new JLabel("Gesamtpreis: " + "10.000" + " EUR");
-		gbc.gridy++;
-		itemArea.add(jlSum, gbc);
-
-		
-		
+		jspTable.setViewportView(tabPositions);
 		getContentPane().add(itemArea, BorderLayout.CENTER);
 		
 	}
@@ -336,10 +301,10 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 		
 		btArea = new JPanel();
 
-		btOK = new MyButton(new ACT_BT_KLICK_OK_CreateBill(this, rechnung));
+		btOK = new MyButton(/*new ACT_BT_KLICK_OK_CreateBill(this, rechnung)*/);
 		btCancel = new MyButton(new ACT_BT_KLICK_CANCEL_CreateBill(this));
 		btSave = new MyButton(new ACT_BT_KLICK_SAVE_CreateBill(rechnung));
-		btChangeData = new MyButton(new ACT_BT_KLICK_ActivateFields(this));
+		btChangeData = new MyButton(new ACT_BT_KLICK_ActivateFieldsEdit(this));
 		
 		btArea.add(btOK);
 		btArea.add(btCancel);

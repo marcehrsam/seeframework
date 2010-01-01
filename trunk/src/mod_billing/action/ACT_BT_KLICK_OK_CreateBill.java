@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 
+import mod_billing.MD_Billing;
 import model_test.Rechnung;
 
 public class ACT_BT_KLICK_OK_CreateBill extends AbstractAction {
@@ -27,7 +28,7 @@ public class ACT_BT_KLICK_OK_CreateBill extends AbstractAction {
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
-		
+		MD_Billing.getInstance().addRechnung(rechnung);
 		try {
 			rechnung.writeToDb();
 		} catch (SQLException e) {
