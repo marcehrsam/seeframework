@@ -16,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -162,7 +163,7 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 
 		switch(column){
 		case 0: return re.getName();
-		case 1: return re.getNummer();
+		case 1: return re.getRechnungsNummer();
 		case 2: return 0;
 		case 3: return "nein";
 		default: return null;
@@ -186,14 +187,12 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 	}
 
 	public boolean addRechnung(Rechnung re){
-		for(int i=0; i<40; i++){
-			rechnungen.add(re);
-		}
 		boolean check = rechnungen.add(re);
 		re.addObserver(this);
-		for(TableModelListener l : tableModelListenerList){
+		/*for(TableModelListener l : tableModelListenerList){
 			l.tableChanged(null);
-		}
+		}*/
+		update(null, null);
 		return check;
 	}
 	
@@ -232,25 +231,28 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent e) {
 		// keine Aktion
+		e.consume();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_ENTER){
+			e.consume();
 			JButton tempBtn = new JButton(new ACT_BT_KLICK_START_EditBill(getRechnung(((JTable)e.getSource()).getSelectedRow())));
 			tempBtn.doClick();
 		}
 	}
 
-	private Rechnung getRechnung(int reNoInList) {
+	public Rechnung getRechnung(int reNoInList) {
 		return rechnungen.get(reNoInList);
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
 		// keine Aktion
+		e.consume();
 	}
 
 	@Override
@@ -260,5 +262,6 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 		}
 		
 	}
+	
 	
 }

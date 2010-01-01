@@ -1,6 +1,5 @@
 package mod_orders;
 
-import gui.GU_MP_BlankScreen;
 import gui.MyPanel;
 
 import javax.swing.JMenu;
@@ -8,7 +7,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import mod_orders.gui.GU_MP_OrdersStartScreen;
-
 import base.AbstractModule;
 
 public class MD_Orders extends AbstractModule{

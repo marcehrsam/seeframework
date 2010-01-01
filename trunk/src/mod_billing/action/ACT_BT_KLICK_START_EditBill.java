@@ -3,7 +3,6 @@ package mod_billing.action;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 
 import mod_billing.gui.GUI_DIALOG_EditBill;
 import model_test.Rechnung;
@@ -24,6 +23,7 @@ public class ACT_BT_KLICK_START_EditBill extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		@SuppressWarnings("unused")
 		GUI_DIALOG_EditBill dialog = new GUI_DIALOG_EditBill(rechnung);
 	}
 
