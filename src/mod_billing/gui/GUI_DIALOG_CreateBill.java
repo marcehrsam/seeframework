@@ -4,7 +4,6 @@ import gui.MyButton;
 import gui.MyTextField;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,11 +32,14 @@ import mod_billing.action.ACT_BT_KLICK_ChooseCustomer;
 import mod_billing.action.ACT_BT_KLICK_CreateCustomer;
 import mod_billing.action.ACT_BT_KLICK_OK_CreateBill;
 import mod_billing.action.ACT_BT_KLICK_SAVE_CreateBill;
-import model_test.MyRechnungTable;
+import mod_billing.action.ACT_BT_KLICK_START_AddProductGetterDialog;
+import mod_products.IProductGetter;
+import model_test.Position;
+import model_test.Produkt;
 import model_test.Rechnung;
 import tools.TO_JFrame;
 
-public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusListener, KeyListener{
+public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusListener, KeyListener, IProductGetter{
 
 	/**
 	 * 
@@ -284,8 +286,11 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 		jspTable = new JScrollPane();
 		jspTable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jspTable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		tabPositions = new MyRechnungTable(null);
-		tabPositions.setModel(rechnung);
+		tabPositions = new JTable(rechnung);
+		//rechnung.addTableModelListener(tabPositions);
+		rechnung.addObserver(this);
+		//tabPositions = new MyRechnungTable(null);
+		//.setModel(rechnung);
 		rechnung.setAnrede(rechnung.getAnrede());
 		jspTable.setViewportView(tabPositions);
 		gbc.gridy++;
@@ -299,7 +304,7 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 		gbc.gridy++;
 		itemArea.add(editButtons, gbc);
 		
-		JButton addButton = new JButton("+");
+		JButton addButton = new JButton(new ACT_BT_KLICK_START_AddProductGetterDialog(this));
 		editButtons.add(addButton);
 		
 		JButton remButton = new JButton("-");
@@ -364,6 +369,8 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 		tfCustomerCity.setText(rechnung.getOrt());
 		tfCustomerID.setText(rechnung.getKundenNummer());
 		
+		//tabPositions.invalidate();
+		tabPositions.repaint();
 		
 	}
 
@@ -456,6 +463,11 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void addProduct(Produkt product, int anzahl) {
+		rechnung.addPos(new Position(product, anzahl));
 	}
 	
 }

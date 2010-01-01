@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Fri Dec 25 19:17:11 CET 2009
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=seeframework.jar
+manifest.mergeall=true
+manifest.mainclass=main.SplashScreen
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

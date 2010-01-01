@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
@@ -26,7 +28,7 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
-public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableModel{
+public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableModel, Observer{
 	
 	private Map<String, String> rechnung = null;
 	
@@ -639,7 +641,11 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 	}
 	
 	public void addPos(Position pos){
-
+		positionen.add(pos);
+		
+		setChanged();
+		notifyObservers();
+		update(null, null);
 	}
 	
 	public void writeToDb() throws SQLException{
@@ -671,6 +677,14 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 			SQL_Writer.inst().getStmt().execute(query);
 		}
 	*/	
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		for(TableModelListener l : tableModelListenerList){
+			l.tableChanged(null);
+		}
+		
 	}
 
 }
