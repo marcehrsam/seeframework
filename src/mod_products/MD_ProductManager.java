@@ -2,8 +2,6 @@ package mod_products;
 
 import gui.MyPanel;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,9 +12,9 @@ import javax.swing.JPanel;
 import mod_products.action.ACT_MI_KLICK_DeleteProduct;
 import mod_products.action.ACT_MI_KLICK_EditProduct;
 import mod_products.action.ACT_MI_KLICK_NewProduct;
+import mod_products.gui.GUI_DIALOG_ProductsStartScreen;
 import model_test.AbstractProdukt;
 import model_test.Produkt;
-import tools.SQL_Writer;
 import base.AbstractModule;
 
 public class MD_ProductManager extends AbstractModule{
@@ -38,6 +36,7 @@ public class MD_ProductManager extends AbstractModule{
 	
 	//lieﬂt die Daten aus der Datenbank
 	private void InitDB(){
+		/*
 		String query = "SELECT * FROM `produkte` WHERE 1;";
 		SQL_Writer sqlWriter = new SQL_Writer();
 		//ResultSet rs = null;
@@ -56,6 +55,7 @@ public class MD_ProductManager extends AbstractModule{
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	private void addProdukt(Produkt prod) {
@@ -105,13 +105,13 @@ public class MD_ProductManager extends AbstractModule{
 	@Override
 	public boolean stopAllActions() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public JPanel getContentScreen() {
 		// TODO Auto-generated method stub
-		return null;
+		return new GUI_DIALOG_ProductsStartScreen();
 	}
 
 	@Override

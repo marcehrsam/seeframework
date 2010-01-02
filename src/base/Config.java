@@ -26,7 +26,7 @@ public class Config implements ISqlSource {
 	private boolean addMDLogin = true;
 	private boolean addMDBilling = true;
 	private boolean addMDCustomer = false;
-	private boolean addMDProductManager = false;
+	private boolean addMDProductManager = true;
 	private boolean addMDUser = true;
 	private boolean addMDOrders = true;
 	private boolean addMDState = true;
