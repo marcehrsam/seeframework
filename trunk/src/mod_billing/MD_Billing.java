@@ -16,7 +16,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.KeyStroke;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
