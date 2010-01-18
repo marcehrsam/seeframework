@@ -81,16 +81,13 @@ public class SplashScreen extends JFrame {
 		progBar = new JProgressBar();
 		progBar.setBounds(0, 380, 400, 20);
 		this.add(progBar);
-		
-		Image img = new ImageIcon("d:/logo.png").getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+		Image img = new ImageIcon(ClassLoader.getSystemResource("logo.png")).getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
 		JLabel bild = new JLabel(new ImageIcon(img));
 		bild.setBackground(Color.WHITE);
 		bild.setBounds(0,0,400,400);
 		this.add(bild);
-				
 		
 		  this.setAlwaysOnTop(true);
-		  
 		
 		setVisible(true);
 		timer = new Timer();
@@ -98,7 +95,7 @@ public class SplashScreen extends JFrame {
 		
 	}
 	public static void main(String[] args) {
-		new SplashScreen(new File("d:/logo.png"), 400, 400, 5000l);
+		new SplashScreen(new File(ClassLoader.getSystemResource("logo.png").getPath()), 400, 400, 5000l);
 		
 	}
 	

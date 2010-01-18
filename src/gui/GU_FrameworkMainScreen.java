@@ -125,7 +125,7 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 		statusBar = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		ImageIcon icon = new ImageIcon("logo.png");
+		ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("logo.png"));
 		icon.setImage(icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 		JLabel labIcon = new JLabel(icon);
 		labIcon.setBorder(new EtchedBorder());
