@@ -77,7 +77,7 @@ public class MD_Main extends AbstractModule {
 		for(AbstractModule mod : Framework.FW().getModules()){
 			JButton btn = new JButton(new ACT_BT_KLICK_setActiveModule(mod));
 			btn.setPreferredSize(new Dimension(200, 60));
-            ImageIcon icon = new ImageIcon("logo2.png");
+            ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("logo2.png"));
             icon.setImage(icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 			btn.setIcon(icon);
 			gbc.gridy++;

@@ -243,7 +243,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		//cb.showText("Stempel / Unterschrift");
 		cb.endText();
 		
-		Image img = Image.getInstance("stempel_sw.png");
+		Image img = Image.getInstance(ClassLoader.getSystemResource("stempel_sw.png"));
 		img.scalePercent(10);
 		img.setAbsolutePosition(400, 160);
 		doc.add(img);
@@ -401,7 +401,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 	private void createBanner(Document doc, PdfContentByte cb) throws MalformedURLException, IOException, DocumentException {
 		//füge briefkopf ein
 		//Image img = Image.getInstance("briefkopf.png");
-		Image img = Image.getInstance("logo2.png");
+		Image img = Image.getInstance(ClassLoader.getSystemResource("logo2.png"));
 		img.scalePercent(14);
 		img.setAbsolutePosition(220, 710);
 		doc.add(img);

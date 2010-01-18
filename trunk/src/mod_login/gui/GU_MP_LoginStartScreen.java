@@ -48,7 +48,7 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridy = 0;
-		ImageIcon img = new ImageIcon("logo2.png");
+		ImageIcon img = new ImageIcon(ClassLoader.getSystemResource("logo2.png"));
 		img.setImage(img.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
 		
 		MyImagePanel panImg = new MyImagePanel(img.getImage());
