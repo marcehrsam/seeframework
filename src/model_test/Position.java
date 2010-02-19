@@ -2,9 +2,7 @@ package model_test;
 
 public class Position {
 	
-	private String artNr = "SE-0000";
 	private double anzahl = 1;
-	private String bezeichnung = "unbenannt";
 	private double einzelpreis = 0;
 	private Produkt produkt = null;
 	
@@ -17,13 +15,11 @@ public class Position {
 	public Position(Produkt produkt, double anzahl){
 		this.produkt = produkt;
 		this.anzahl = anzahl;
+		this.einzelpreis = produkt.getPreis();
 	}
 	
 	public String getArtNr() {
-		return artNr;
-	}
-	public void setArtNr(String artNr) {
-		this.artNr = artNr;
+		return produkt.getArtNr();
 	}
 	public double getAnzahl() {
 		return anzahl;
@@ -32,10 +28,7 @@ public class Position {
 		this.anzahl = anzahl;
 	}
 	public String getBezeichnung() {
-		return bezeichnung;
-	}
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
+		return produkt.getBezeichnung();
 	}
 	public double getEinzelpreis() {
 		return einzelpreis;
@@ -50,6 +43,7 @@ public class Position {
 
 	public void setProdukt(Produkt produkt) {
 		this.produkt = produkt;
+		this.einzelpreis = produkt.getPreis();
 	}
 
 }

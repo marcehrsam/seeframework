@@ -8,6 +8,9 @@ import java.util.Collection;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.tree.TreeNode;
+
+import tools.Debug;
 
 import mod_products.action.ACT_MI_KLICK_DeleteProduct;
 import mod_products.action.ACT_MI_KLICK_EditProduct;
@@ -25,12 +28,18 @@ public class MD_ProductManager extends AbstractModule{
 	
 	private Collection<AbstractProdukt> db = null;
 	
+	//wurzel vom produktbaum
+	private AbstractProdukt root = null;
+	
 	protected JMenu menu = null;
 	
 	public final String MENUNAME = "Produkte";
 	
 	private MD_ProductManager(){
 		db = new ArrayList<AbstractProdukt>();
+		root = new AbstractProdukt("Produkte");
+		Produkt p1 = new Produkt("TestProdukt");
+		root.addProdukt(p1);
 		InitDB();
 	}
 	
@@ -58,8 +67,16 @@ public class MD_ProductManager extends AbstractModule{
 		*/
 	}
 	
-	private void addProdukt(Produkt prod) {
+	private void addProdukt(AbstractProdukt prod) {
 		db.add(prod);
+	}
+	
+	private boolean addProdukt(AbstractProdukt prod, AbstractProdukt parent){
+		if(parent != null){
+			return parent.addProdukt(prod);
+		}
+		Debug.out("MD_ProductManager, Produkt wurde nicht hinzugefügt.");
+		return false;
 	}
 
 	public static MD_ProductManager getInstance(){
@@ -124,6 +141,10 @@ public class MD_ProductManager extends AbstractModule{
 	public boolean readConfigFile() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public AbstractProdukt getRoot(){
+		return this.root;
 	}
 	
 }
