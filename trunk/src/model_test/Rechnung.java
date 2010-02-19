@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -115,7 +117,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 		//initialisiere header
 		Document doc = new Document(PageSize.A4);
-		PdfWriter pdfw = PdfWriter.getInstance(doc, new FileOutputStream("Rechnung.pdf"));
+		PdfWriter pdfw = PdfWriter.getInstance(doc, new FileOutputStream("belege_pdf/" + rechnung.get(RECHNUNG_ID) + "_" + rechnung.get(NAME) + ".pdf"));
 		doc.open();
 		PdfContentByte cb = pdfw.getDirectContent();
 		
@@ -174,10 +176,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 		cb.endText();
 		
-		cb.beginText();
-		cb.setTextMatrix(190, 280);
-		cb.showText("(Alle Beträge inkl. 19% MWSt)");
-		cb.endText();
+		
 		
 		/*
 		cb.beginText();
@@ -253,7 +252,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 	private void createTable(PdfContentByte cb, int page, int fromPages) {
 		
 		//spaltenverhältnisse
-		PdfPTable posTable = new PdfPTable(new float[]{0.1f, 0.2f, 0.1f, 0.6f, 0.25f, 0.3f});
+		PdfPTable posTable = new PdfPTable(new float[]{0.1f, 0.2f, 0.1f, 0.55f, 0.3f, 0.3f});
 		
 		//table header
 		posTable.addCell("Pos.");
@@ -267,11 +266,21 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 			for(int i=0; i<10; i++){
 				Position pos = ((ArrayList<Position>)positionen).get((page-1)*10+i);
 				//TODO: positionsnummern abfragen
-				posTable.addCell("1");
+				posTable.addCell(((ArrayList<Position>)positionen).indexOf(pos)+1 + "");
 				posTable.addCell(pos.getArtNr());
 				posTable.addCell(pos.getAnzahl() + "");
 				posTable.addCell(pos.getBezeichnung());
-				posTable.addCell(pos.getEinzelpreis()+ " EUR");
+				
+				posTable.setHorizontalAlignment(PdfPTable.ALIGN_RIGHT);
+				DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+				dfs.setDecimalSeparator('.');
+				dfs.setGroupingSeparator('.');
+				DecimalFormat df = new DecimalFormat("0000.00", dfs);
+				String einzelPreisMitFuehrendenNullen = df.format(pos.getEinzelpreis());
+				String einzelpreisFormatiert = replaceZeros(einzelPreisMitFuehrendenNullen);
+				posTable.addCell(einzelpreisFormatiert + " EUR");
+				//posTable.setHorizontalAlignment(PdfPTable.ALIGN_LEFT);
+				
 				//TODO: gesamtpreis abfragen
 				posTable.addCell(pos.getEinzelpreis()*pos.getAnzahl() + " EUR");
 			}
@@ -281,20 +290,30 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		//falls letzte Seite -> summe einfügen
 		if(page>=fromPages){
 			int max = positionen.size()%POSPERPAGE;
+			if(max==0)max=10;
 			for(int i=0; i<max; i++){
 				Position pos = ((ArrayList<Position>)positionen).get((page-1)*10+i);
 				//TODO: positionsnummern abfragen
-				posTable.addCell("1");
+				posTable.addCell(((ArrayList<Position>)positionen).indexOf(pos)+1 + "");
 				posTable.addCell(pos.getArtNr());
 				posTable.addCell(pos.getAnzahl() + "");
 				posTable.addCell(pos.getBezeichnung());
-				posTable.addCell(pos.getEinzelpreis()+ " EUR");
+				
+				posTable.setHorizontalAlignment(PdfPTable.ALIGN_RIGHT);
+				DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+				dfs.setDecimalSeparator('.');
+				dfs.setGroupingSeparator('.');
+				DecimalFormat df = new DecimalFormat("0000.00", dfs);
+				String einzelPreisMitFuehrendenNullen = df.format(pos.getEinzelpreis());
+				String einzelpreisFormatiert = replaceZeros(einzelPreisMitFuehrendenNullen);
+				posTable.addCell(einzelpreisFormatiert + " EUR");
+				
 				//TODO: gesamtpreis abfragen
 				posTable.addCell(pos.getEinzelpreis()*pos.getAnzahl() + " EUR");
 			}
 			
 			//TODO: Summe berechnen
-			for(int i=0; i<10; i++){
+			for(int i=0; i<(10-max); i++){
 				posTable.addCell(" ");
 				posTable.addCell(" ");
 				posTable.addCell(" ");
@@ -310,12 +329,46 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 			posTable.addCell("");
 			posTable.addCell("Summe:");
 			//TODO: Gesamtpreis ermitteln
-			posTable.addCell("60.00 EUR");
+			posTable.addCell(getSum() + " EUR");
+			
+			BaseFont bf = null;
+			try {
+				bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			cb.setFontAndSize(bf, 8);
+			cb.beginText();
+			cb.setTextMatrix(190, 280);
+			cb.showText("(Alle Beträge inkl. 19% MWSt)");
+			cb.endText();
 		}
 		
 		//TODO: seite von/bis berechnen
 		posTable.writeSelectedRows(0, -1, 80, 500, cb);
 		
+	}
+
+	private String replaceZeros(String einzelPreisMitFuehrendenNullen) {
+		char[] str = einzelPreisMitFuehrendenNullen.toCharArray();
+		for(int i=0; i<einzelPreisMitFuehrendenNullen.length(); i++){
+			if(str[i]=='0'){
+				str[i] = ' ';
+			}else{
+				//Abbruchbed., wenn erste zahl auftaucht
+				if(str[i]=='.'){
+					//restauriere letzte 0 vor komma und beende
+					str[i-1] = '0';	
+				}
+				return new String(str);
+			}
+		}
+		return new String(str);
 	}
 
 	private void createRechteSeiteHeader(PdfContentByte cb, int anzAkt, int anzGes) throws DocumentException, IOException {
@@ -603,6 +656,8 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		//pos ist nicht editierbar
 		if(columnIndex==0)return false;
+		else if(columnIndex==1) return false;
+		else if(columnIndex==3) return false;
 		return true;
 	}
 	
@@ -615,9 +670,9 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		switch (columnIndex){
 			case 0:  break;
 			//case 1:  setProduct(((ArrayList<Position>)positionen).get(rowIndex), (Produkt)MD_ProductManager.getInstance().getProdukt((String)value));
-			case 1:  ((ArrayList<Position>)positionen).get(rowIndex).setArtNr((String)value);break;
+			//case 1:  ((ArrayList<Position>)positionen).get(rowIndex).setArtNr((String)value);break;
 			case 2:  ((ArrayList<Position>)positionen).get(rowIndex).setAnzahl(Double.parseDouble((String)value)); break;
-			case 3:  ((ArrayList<Position>)positionen).get(rowIndex).setBezeichnung((String)value); break;
+			//case 3:  ((ArrayList<Position>)positionen).get(rowIndex).setBezeichnung((String)value); break;
 			case 4:  ((ArrayList<Position>)positionen).get(rowIndex).setEinzelpreis(Double.parseDouble((String)value)); break;
 			default: break;
 		}
@@ -685,6 +740,17 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 			l.tableChanged(null);
 		}
 		
+	}
+	
+	public double getSum(){
+		double summe = 0;
+		
+		for(Position p : positionen){
+			double teilSumme = p.getAnzahl()*p.getEinzelpreis();
+			summe+=teilSumme;
+		}
+	
+		return summe;
 	}
 
 }

@@ -1,10 +1,18 @@
 package mod_products.gui;
 
+import gui.MyPanel;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.util.Observable;
 
-import mod_products.MD_ProductManager;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
 
-import gui.MyPanel;
+import mod_products.MD_ProductManager;
 
 public class GUI_DIALOG_ProductsStartScreen extends MyPanel{
 
@@ -19,7 +27,27 @@ public class GUI_DIALOG_ProductsStartScreen extends MyPanel{
 	}
 	
 	private void InitLayout() {
-		// TODO Auto-generated method stub
+		setLayout(new BorderLayout());
+		
+		JScrollPane leftScroller = new JScrollPane();
+		JTree productList = new JTree(MD_ProductManager.getInstance().getRoot());
+		leftScroller.setViewportView(productList);
+		this.add(leftScroller, BorderLayout.WEST);
+		
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new FlowLayout());
+		JButton newProductBtn = new JButton("Neues Produkt");
+		southPanel.add(newProductBtn);
+		JButton changeProductBtn = new JButton("Produkt ändern");
+		southPanel.add(changeProductBtn);
+		JButton deleteProductBtn = new JButton("Produkt löschen");
+		southPanel.add(deleteProductBtn);
+		this.add(southPanel, BorderLayout.SOUTH);
+		
+		JPanel centerPanel = new JPanel();
+		centerPanel.setBackground(Color.BLACK);
+		this.add(centerPanel, BorderLayout.CENTER);
+		
 		
 	}
 
