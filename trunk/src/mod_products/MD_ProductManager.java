@@ -3,43 +3,45 @@ package mod_products;
 import gui.MyPanel;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
-
-import tools.Debug;
 
 import mod_products.action.ACT_MI_KLICK_DeleteProduct;
 import mod_products.action.ACT_MI_KLICK_EditProduct;
 import mod_products.action.ACT_MI_KLICK_NewProduct;
 import mod_products.gui.GUI_DIALOG_ProductsStartScreen;
-import model_test.AbstractProdukt;
+import model_test.PGroup;
 import model_test.Produkt;
 import base.AbstractModule;
 
-public class MD_ProductManager extends AbstractModule{
+public class MD_ProductManager extends AbstractModule implements IProductTree{
 //Verwaltet alle Produkte
 //entweder direkt auf DB aufsetzen oder mit collections realisieren	
 	
 	private static MD_ProductManager instance = null;
 	
-	private Collection<AbstractProdukt> db = null;
-	
-	//wurzel vom produktbaum
-	private AbstractProdukt root = null;
+	private List<IProductTree> db = null;
 	
 	protected JMenu menu = null;
 	
 	public final String MENUNAME = "Produkte";
 	
 	private MD_ProductManager(){
-		db = new ArrayList<AbstractProdukt>();
-		root = new AbstractProdukt("Produkte");
-		Produkt p1 = new Produkt("TestProdukt");
-		root.addProdukt(p1);
+		db = new ArrayList<IProductTree>();
+		
+		PGroup serv = new PGroup("Service");
+		db.add(serv);
+		
+		Produkt p1 = new Produkt("P1");
+		serv.addTreeItem(p1);
+	
 		InitDB();
 	}
 	
@@ -67,16 +69,9 @@ public class MD_ProductManager extends AbstractModule{
 		*/
 	}
 	
-	private void addProdukt(AbstractProdukt prod) {
-		db.add(prod);
-	}
-	
-	private boolean addProdukt(AbstractProdukt prod, AbstractProdukt parent){
-		if(parent != null){
-			return parent.addProdukt(prod);
-		}
-		Debug.out("MD_ProductManager, Produkt wurde nicht hinzugefügt.");
-		return false;
+	public boolean addProdukt(Produkt prod, IProductTree parent){
+		//TODO: NPE abfangen
+		return parent.addTreeItem(prod);
 	}
 
 	public static MD_ProductManager getInstance(){
@@ -84,14 +79,16 @@ public class MD_ProductManager extends AbstractModule{
 		return instance;
 	}
 	
-	public AbstractProdukt getProdukt(String artNr){
-		if(db.size()>0){
-			for(AbstractProdukt p : db){
-				if(p.getArtNr().equals(artNr)){
-					return p;
-				}
-			}
-		}
+	public Produkt getProdukt(String artNr){
+//		if(db.size()>0){
+//			for(PGroup pg : db){
+//				for(int i = 0; i<pg.getChildCount(); i++){
+//					if(pg.getChildAt(i).getArtNr().equals(artNr)){
+//						return pg.getChildAt(i);
+//					}
+//				}
+//			}
+//		}
 		
 		return null;
 	}
@@ -142,9 +139,112 @@ public class MD_ProductManager extends AbstractModule{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public AbstractProdukt getRoot(){
-		return this.root;
+
+	@Override
+	public boolean addTreeItem(IProductTree item) {
+		if(item instanceof PGroup){
+			boolean ok = db.add(item);
+			setChanged();
+			notifyObservers();
+			return ok;
+		}
+		return false;
+	}
+
+	@Override
+	public String getName() {
+		return "Produkte";
+	}
+
+	@Override
+	public void insert(MutableTreeNode node, int index) {
+		if(node instanceof IProductTree){
+			addTreeItem((IProductTree)node);
+		}else{
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	@Override
+	public void remove(int index) {
+		if(db.size()>index){
+			db.remove(index);
+			setChanged();
+			notifyObservers();
+		}
+	}
+
+	@Override
+	public void remove(MutableTreeNode node) {
+		if(db.contains(node)){
+			db.remove(node);
+			setChanged();
+			notifyObservers();
+		}
+		
+	}
+
+	@Override
+	public void removeFromParent() {
+		// TODO nu
+		
+	}
+
+	@Override
+	public void setParent(MutableTreeNode arg0) {
+		// TODO nu
+		
+	}
+
+	@Override
+	public void setUserObject(Object o) {
+		// TODO Datenelement kapseln???
+		// TODO nu
+		
+	}
+
+	@Override
+	public Enumeration<IProductTree> children() {
+		return Collections.enumeration(db);
+	}
+
+	@Override
+	public boolean getAllowsChildren() {
+		return true;
+	}
+
+	@Override
+	public TreeNode getChildAt(int childIndex) {
+		if(db.size()>childIndex){
+			return db.get(childIndex);
+		}
+		return null;
+	}
+
+	@Override
+	public int getChildCount() {
+		//TODO: rekursiv zählen
+		return db.size();
+	}
+
+	@Override
+	public int getIndex(TreeNode node) {
+		return db.indexOf(node);
+	}
+
+	@Override
+	public TreeNode getParent() {
+		// TODO nu
+		return null;
+	}
+
+	@Override
+	public boolean isLeaf() {
+		return false;
+	}
+
+	public String toString(){
+		return "Datenbank";
 	}
 	
 }
