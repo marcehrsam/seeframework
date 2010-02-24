@@ -12,6 +12,7 @@ import mod_billing.action.ACT_BT_KLICK_CloseDialog;
 import mod_billing.action.ACT_BT_KLICK_OK_AddProductGetterDialog;
 import mod_products.IProductGetter;
 import mod_products.IProductSource;
+import model_test.PGroup;
 import model_test.Produkt;
 
 import tools.TO_JFrame;
@@ -61,14 +62,12 @@ public class GUI_DIALOG_ProductGetterDialog extends JDialog implements IProductS
 		return 1;
 	}
 
-	@Override
 	public Produkt getProduct() {
-		// TODO Auto-generated method stub
 		return new Produkt("Testprodukt");
 	}
 
 	@Override
-	public List<Produkt> getProducts() {
+	public List<PGroup> getProducts() {
 		// TODO Auto-generated method stub
 		return null;
 	}

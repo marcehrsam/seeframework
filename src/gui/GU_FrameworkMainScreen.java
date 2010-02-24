@@ -55,6 +55,7 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 		Framework.FW().Init();
 		
 		setSize(new Dimension(WIDTH, HEIGHT));
+		setResizable(false);
 		setTitle(TITLE);
 		setLayout(new BorderLayout());
 		TO_JFrame.getInstance().centerJFrame(this);
