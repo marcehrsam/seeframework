@@ -3,6 +3,7 @@ package mod_products.gui;
 import gui.MyPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class GUI_DIALOG_ProductsStartScreen extends MyPanel implements TreeSelec
 		setLayout(new BorderLayout());
 		
 		leftScroller = new JScrollPane();
+		leftScroller.setPreferredSize(new Dimension(200, 600));
 		productList = new JTree(MD_ProductManager.getInstance());
 		productList.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		productList.addTreeSelectionListener(this);
