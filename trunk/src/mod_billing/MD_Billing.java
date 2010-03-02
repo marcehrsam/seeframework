@@ -119,7 +119,7 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 		switch(column){
 		case 0: return String.class;//Name
 		case 1: return String.class;//Re.-Nr
-		case 2: return Double.class;//Betrag
+		case 2: return String.class;//Betrag
 		case 3: return String.class;//gebucht
 		default: return String.class;
 		}
@@ -163,7 +163,7 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 		switch(column){
 		case 0: return re.getName();
 		case 1: return re.getRechnungsNummer();
-		case 2: return 0;
+		case 2: return re.getSum() + " €";
 		case 3: return "nein";
 		default: return null;
 		}
