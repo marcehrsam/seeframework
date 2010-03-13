@@ -29,24 +29,26 @@ public class SQL_Writer {
 		}	
 		
 		//verbindung zu db herstellen
-		try {
-			con = DriverManager.getConnection(path, user, pass);
-			stmt = con.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			Debug.out("Verbindung fehlgeschlagen!");
-			e.printStackTrace();
-		}catch (Exception e){
-			Debug.out("Allgemeiner Fehler im SQL_Writer.");
-			e.printStackTrace();
-		}
+//		try {
+//			con = DriverManager.getConnection(path, user, pass);
+//			stmt = con.createStatement();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			Debug.out("Verbindung fehlgeschlagen!");
+//			e.printStackTrace();
+//		}catch (Exception e){
+//			Debug.out("Allgemeiner Fehler im SQL_Writer.");
+//			e.printStackTrace();
+//		}
 		
 		
 		
 	}
 	
 	public ResultSet getResult(String query) throws SQLException{
-		ResultSet result = stmt.executeQuery(query);
+//		ResultSet result = stmt.executeQuery(query);
+		//TODO: entfernen (unten)
+		ResultSet result = null;
 		return result;
 	}
 	

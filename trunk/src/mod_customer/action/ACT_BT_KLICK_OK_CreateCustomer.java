@@ -7,6 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import tools.Debug;
+
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 import mod_customer.AbstractCustomer;
@@ -35,7 +37,11 @@ public class ACT_BT_KLICK_OK_CreateCustomer extends AbstractAction {
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
-		holder.setCustomer(customer);
+		if(holder != null){
+			holder.setCustomer(customer);
+		}else{
+			Debug.out("holder == null in ACT_BT_KLICK_OK_CreateCustomer.");
+		}
 		
 		//in db schreiben
 		try {

@@ -1,4 +1,4 @@
-package mod_billing.action;
+package mod_customer.action;
 
 import java.awt.event.ActionEvent;
 
@@ -14,7 +14,7 @@ public class ACT_BT_KLICK_CreateCustomer extends AbstractAction {
 	 */
 	private static final long serialVersionUID = -3642268052174687441L;
 
-	public final String TITLE = "Kunde anlegen";
+	public final String TITLE = "Neuer Kunde";
 	
 	private ICustomerHolder holder;
 	

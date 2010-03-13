@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -22,7 +21,6 @@ import mod_products.IProductSource;
 import mod_products.MD_ProductManager;
 import model_test.PGroup;
 import model_test.Produkt;
-
 import tools.TO_JFrame;
 
 public class GUI_DIALOG_ProductGetterDialog extends JDialog implements IProductSource, TreeSelectionListener{
