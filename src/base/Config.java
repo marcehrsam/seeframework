@@ -25,7 +25,7 @@ public class Config implements ISqlSource {
 	//welche Module sollen geadded werden?
 	private boolean addMDLogin = true;
 	private boolean addMDBilling = true;
-	private boolean addMDCustomer = false;
+	private boolean addMDCustomer = true;
 	private boolean addMDProductManager = true;
 	private boolean addMDUser = true;
 	private boolean addMDOrders = true;

@@ -178,33 +178,33 @@ public abstract class AbstractCustomer extends Observable{
 	
 	public void writeToDB() throws SQLException{
 		
-		Set<String> keys = kunde.keySet();
-		String query = "INSERT INTO `se_framework_db1`.`kundendaten` ( ";
-		String header = "";
-		String values = "";
-		Iterator<String> it = keys.iterator();
-		boolean firstLoop = true;
-		while(it.hasNext()){
-			if(!firstLoop){
-				header += ", ";
-				values += ", ";
-			}
-			firstLoop = false;
-			String current = it.next();
-			header += "`" + current + "`";
-			String value = kunde.get(current);
-			if((value.equals(""))||(value==null)){
-				values += "NULL";
-			}else{
-				values += "'" + value + "'";
-			}
-			 
-		}
-		query += header + ") VALUES (" + values + ");";
-		JOptionPane.showMessageDialog(null, query);
-		
-		SQL_Writer writer = new SQL_Writer();
-		writer.getStmt().execute(query);
+//		Set<String> keys = kunde.keySet();
+//		String query = "INSERT INTO `se_framework_db1`.`kundendaten` ( ";
+//		String header = "";
+//		String values = "";
+//		Iterator<String> it = keys.iterator();
+//		boolean firstLoop = true;
+//		while(it.hasNext()){
+//			if(!firstLoop){
+//				header += ", ";
+//				values += ", ";
+//			}
+//			firstLoop = false;
+//			String current = it.next();
+//			header += "`" + current + "`";
+//			String value = kunde.get(current);
+//			if((value.equals(""))||(value==null)){
+//				values += "NULL";
+//			}else{
+//				values += "'" + value + "'";
+//			}
+//			 
+//		}
+//		query += header + ") VALUES (" + values + ");";
+//		JOptionPane.showMessageDialog(null, query);
+//		
+//		SQL_Writer writer = new SQL_Writer();
+//		writer.getStmt().execute(query);
 	}
 	
 	public String toString(){

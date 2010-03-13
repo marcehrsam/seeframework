@@ -5,6 +5,7 @@ import gui.MyPanel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.table.TableModel;
 
 import mod_orders.gui.GU_MP_OrdersStartScreen;
 import base.AbstractModule;
@@ -17,10 +18,18 @@ public class MD_Orders extends AbstractModule{
 	
 	private JMenu menu = null;
 	
+	//hier das Tablemodel als Objekt
+	private TableModel tabMod;
+	
 	private MD_Orders(){
-		
+		createTableModel();
 	}
 	
+	private void createTableModel() {
+		tabMod = new MD_OrdersTableModel(this);
+		
+	}
+
 	public static MD_Orders getInstance(){
 		if(instance == null)instance = new MD_Orders();
 		return instance;
@@ -43,7 +52,8 @@ public class MD_Orders extends AbstractModule{
 
 	@Override
 	public JPanel getContentScreen() {
-		return new GU_MP_OrdersStartScreen();
+		//return new Selektion();
+		/*//TODO:*/ return new GU_MP_OrdersStartScreen();
 	}
 
 	@Override
@@ -73,6 +83,10 @@ public class MD_Orders extends AbstractModule{
 	public boolean readConfigFile() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public TableModel getTableModel(){
+		return tabMod;
 	}
 
 }

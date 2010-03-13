@@ -20,7 +20,6 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -29,7 +28,6 @@ import mod_products.IProductTree;
 import mod_products.MD_ProductManager;
 import model_test.PGroup;
 import model_test.Produkt;
-import tools.Debug;
 
 public class GUI_DIALOG_ProductsStartScreen extends MyPanel implements TreeSelectionListener, IProductSource{
 

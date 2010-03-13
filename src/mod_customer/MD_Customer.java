@@ -18,6 +18,7 @@ import javax.swing.event.ListDataListener;
 import mod_customer.action.ACT_MI_KLICK_CreateCustomer;
 import mod_customer.action.ACT_MI_KLICK_EditCustomer;
 import mod_customer.action.ACT_MI_KLICK_RemoveCustomer;
+import mod_customer.gui.GUI_DIALOG_CustomerStartScreen;
 import model_test.ICustomerHolder;
 import tools.SQL_Writer;
 import base.AbstractModule;
@@ -45,7 +46,7 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 		//TODO: bei der Initialisierung werden die kundendaten aus der mysql db eingelesen
 		Customer testkunde = new Customer();
 		addKunde(testkunde);
-		InitDB();
+		//TODO: InitDB();
 	}
 	
 	private void InitDB() {
@@ -148,13 +149,12 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 	@Override
 	public boolean stopAllActions() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public JPanel getContentScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GUI_DIALOG_CustomerStartScreen();
 	}
 
 	@Override
