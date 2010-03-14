@@ -3,6 +3,8 @@ package mod_orders;
 import gui.MyPanel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -37,6 +39,8 @@ public class MD_Orders extends AbstractModule{
 	
 	//hier das Tablemodel als Objekt
 	private TableModel tabMod;
+	
+	private long lastID = 0;
 
 	private MD_Orders(){
 		//createTableModel();
@@ -48,8 +52,14 @@ public class MD_Orders extends AbstractModule{
 		
 		initOffene();
 		
+		initIDs();
+		
 	}
 	
+	private void initIDs() {
+		lastID = Calendar.getInstance().get(Calendar.YEAR)*10000;
+	}
+
 	private void initOffene() {
 		// TODO Aufträge aus Datenbank lesen
 		
@@ -152,7 +162,9 @@ public class MD_Orders extends AbstractModule{
 	}
 	
 	public String getNextID(){
-		return "keine ID";
+		String id = (lastID+1) + ""; 
+		lastID++;
+		return id;
 	}
 	
 }
