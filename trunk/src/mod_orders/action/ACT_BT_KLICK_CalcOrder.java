@@ -8,7 +8,6 @@ import mod_billing.MD_Billing;
 import mod_customer.Customer;
 import mod_orders.Order;
 import mod_orders.gui.IOrderHolder;
-import model_test.AbstractBeleg;
 import model_test.Rechnung;
 
 public class ACT_BT_KLICK_CalcOrder extends AbstractAction {

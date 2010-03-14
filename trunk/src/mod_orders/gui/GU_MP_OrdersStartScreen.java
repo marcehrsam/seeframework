@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +19,6 @@ import javax.swing.event.ListSelectionListener;
 
 import mod_orders.MD_Orders;
 import mod_orders.MD_OrdersTableModel;
-import mod_orders.Order;
 import mod_orders.action.ACT_TR_OpenNewOrderForm;
 import mod_orders.action.ROOT_OrderTreeActions;
 import model_test.AbstractBeleg;

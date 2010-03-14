@@ -14,8 +14,8 @@ public class Produkt extends Observable implements IProductTree{
 	public static final String BEZEICHNUNG = "Bezeichnung";
 	public static final String EINZELPREIS = "PreisStck";
 	
-	protected String artNr = "keine";
-	protected String bezeichnung = "unbenannt";
+	protected String artNr = "";
+	protected String bezeichnung = "";
 	protected double preis = 0;
 	
 	public Produkt() {
