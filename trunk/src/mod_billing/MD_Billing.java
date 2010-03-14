@@ -192,6 +192,7 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 			l.tableChanged(null);
 		}*/
 		update(null, null);
+		System.out.println("Rechnung eingefügt");
 		return check;
 	}
 	

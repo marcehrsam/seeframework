@@ -1,10 +1,13 @@
 package model_test;
 
-public class Position {
+import java.util.Observable;
+
+public class Position extends Observable{
 	
 	private double anzahl = 1;
 	private double einzelpreis = 0;
 	private Produkt produkt = null;
+	private boolean billAvailable = false;
 	
 	/*public Position(){
 		this.produkt = new Produkt();
@@ -26,6 +29,8 @@ public class Position {
 	}
 	public void setAnzahl(double anzahl) {
 		this.anzahl = anzahl;
+		setChanged();
+		notifyObservers();
 	}
 	public String getBezeichnung() {
 		return produkt.getBezeichnung();
@@ -35,6 +40,8 @@ public class Position {
 	}
 	public void setEinzelpreis(double einzelpreis) {
 		this.einzelpreis = einzelpreis;
+		setChanged();
+		notifyObservers();
 	}
 
 	public Produkt getProdukt() {
@@ -44,6 +51,18 @@ public class Position {
 	public void setProdukt(Produkt produkt) {
 		this.produkt = produkt;
 		this.einzelpreis = produkt.getPreis();
+		setChanged();
+		notifyObservers();
+	}
+
+	public boolean isBillAvailable() {
+		return billAvailable;
+	}
+	
+	public void setBillAvailable(boolean value){
+		this.billAvailable = value;
+		setChanged();
+		notifyObservers();
 	}
 
 }

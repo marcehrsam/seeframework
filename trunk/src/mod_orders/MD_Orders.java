@@ -2,12 +2,16 @@ package mod_orders;
 
 import gui.MyPanel;
 
+import java.util.ArrayList;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 
+import mod_customer.Customer;
 import mod_orders.gui.GU_MP_OrdersStartScreen;
+import model_test.AbstractBeleg;
 import base.AbstractModule;
 
 public class MD_Orders extends AbstractModule{
@@ -18,16 +22,50 @@ public class MD_Orders extends AbstractModule{
 	
 	private JMenu menu = null;
 	
+	public boolean tableModelInitialisiert = false;
+	
+	//die aufträge werden nach status auf mehrere Listen verteilt
+	
+	//erledigte aufträge am besten nur in db archivieren und nicht in den ram laden
+	private ArrayList<Order> erledigt = null;
+	
+	//ram
+	private ArrayList<Order> fehlerhaft = null;
+	
+	//diese liste im ram halten 
+	private ArrayList<AbstractBeleg> offen = null;
+	
 	//hier das Tablemodel als Objekt
 	private TableModel tabMod;
-	
+
 	private MD_Orders(){
-		createTableModel();
+		//createTableModel();
+		
+		//listen initialisieren
+		erledigt = new ArrayList<Order>();
+		fehlerhaft = new ArrayList<Order>();
+		offen = new ArrayList<AbstractBeleg>();
+		
+		initOffene();
+		
 	}
 	
-	private void createTableModel() {
-		tabMod = new MD_OrdersTableModel(this);
+	private void initOffene() {
+		// TODO Aufträge aus Datenbank lesen
 		
+		//TODO: nur zum Test
+		
+		Customer kunde1 = new Customer();
+		
+		Order o1 = new Order(kunde1);
+		Order o2 = new Order(kunde1);
+		o1.addBeleg(o2);
+		offen.add(o1);
+		
+	}
+
+	public void createTableModel() {
+		tabMod = new MD_OrdersTableModel();
 	}
 
 	public static MD_Orders getInstance(){
@@ -88,5 +126,33 @@ public class MD_Orders extends AbstractModule{
 	public TableModel getTableModel(){
 		return tabMod;
 	}
+	
+	public void setTabMod(TableModel tabMod) {
+		this.tabMod = tabMod;
+		setChanged();
+		notifyObservers();
+	}
 
+	public ArrayList<AbstractBeleg> getAllBelege(int param){
+		if(param==AbstractBeleg.OFFEN){
+			return offen;
+		}
+		return null;
+	}
+	
+	//TODO: nur für offene!!!
+	public boolean addOrder(AbstractBeleg order){
+		order.setID(getNextID());
+		boolean ret = offen.add(order);
+		//((MD_OrdersTableModel)tabMod).refreshModel();
+		tabMod = new MD_OrdersTableModel();
+		setChanged();
+		notifyObservers();
+		return ret;
+	}
+	
+	public String getNextID(){
+		return "keine ID";
+	}
+	
 }

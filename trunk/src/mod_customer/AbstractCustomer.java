@@ -2,14 +2,14 @@ package mod_customer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Set;
 
-import javax.swing.JOptionPane;
-
+import mod_orders.MD_Orders;
+import mod_orders.Order;
+import model_test.AbstractBeleg;
 import tools.SQL_Writer;
 
 public abstract class AbstractCustomer extends Observable{
@@ -209,6 +209,20 @@ public abstract class AbstractCustomer extends Observable{
 	
 	public String toString(){
 		return kunde.get(KDNRA) + " " + kunde.get(NAME) + ", " + kunde.get(VORNAME); 
+	}
+	
+	//TODO: überladen nach datum
+	//TODO: alle aufträge anzeigen
+	public ArrayList<AbstractBeleg> getAllBelege(){
+		ArrayList<AbstractBeleg> kdBelege = new ArrayList<AbstractBeleg>();
+		//offene Aufträge ausgeben
+		ArrayList<AbstractBeleg> alleKdBelege = MD_Orders.getInstance().getAllBelege(Order.OFFEN);
+		for(AbstractBeleg o : alleKdBelege){
+			if(o.getKunde().getKundenNummer().equals(this.getKundenNummer())){
+				kdBelege.add(o);
+			}
+		}
+		return kdBelege;
 	}
 	
 }

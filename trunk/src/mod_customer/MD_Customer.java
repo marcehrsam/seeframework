@@ -169,6 +169,9 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 		return false;
 	}
 	
+	public Collection<Customer> getAllCustomers(){
+		return db;
+	}
 	
 
 }
