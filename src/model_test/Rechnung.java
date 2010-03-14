@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,8 +35,6 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 	
 	private List<TableModelListener> tableModelListenerList = null;
 	
-	private Collection<Position> positionen = null;
-	
 	public final int POSPERPAGE = 10;
 	
 	//für sql abfrage
@@ -60,37 +57,24 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 		tableModelListenerList = new ArrayList<TableModelListener>();
 		
-		positionen = new ArrayList<Position>();
-		
 		Produkt testprodukt = new Produkt("SE-0001", "IT-Service (Stundensatz)", 20 );
 		Position testpos = new Position(testprodukt, 3);
 		positionen.add(testpos);
-		/*Position testpos1 = new Position(testprodukt, 2);
-		positionen.add(testpos1);
-		Position testpos2 = new Position(testprodukt, 3);
-		positionen.add(testpos2);
-		Position testpos3 = new Position(testprodukt, 4);
-		positionen.add(testpos3);
-		Position testpos4 = new Position(testprodukt, 5);
-		positionen.add(testpos4);
-		Position testpos5 = new Position(testprodukt, 6);
-		positionen.add(testpos5);
-		Position testpos6 = new Position(testprodukt, 7);
-		positionen.add(testpos6);
-		Position testpos7 = new Position(testprodukt, 8);
-		positionen.add(testpos7);
-		Position testpos8 = new Position(testprodukt, 9);
-		positionen.add(testpos8);
-		Position testpos9 = new Position(testprodukt, 10);
-		positionen.add(testpos9);
-		Position testpos10 = new Position(testprodukt, 11);
-		positionen.add(testpos10);
-			*/	
 		rechnung = new HashMap<String, String>();
  		InitData();
 		
 	}
 	
+	public Rechnung(AbstractBeleg order) {
+		super(null);
+		//nur nicht berechnete produkte 
+		for(Position p: order.getPositionen()){
+			if(!p.isBillAvailable()){
+				this.positionen.add(p);
+			}
+		}
+	}
+
 	private void InitData(){
 		rechnung.put(RECHNUNG_ID, "050709-0001");
 		rechnung.put(AUFTRAG_ID, "200609-0001");
@@ -688,20 +672,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 	}
 	
-	@SuppressWarnings("unused")
-	private void setProduct(Position altPos, Produkt product){
-		((ArrayList<Position>)positionen).remove(altPos);
-		Position neuPos = new Position(product, altPos.getAnzahl());
-		((ArrayList<Position>)positionen).add(neuPos);
-	}
 	
-	public void addPos(Position pos){
-		positionen.add(pos);
-		
-		setChanged();
-		notifyObservers();
-		update(null, null);
-	}
 	
 	public void writeToDb() throws SQLException{
 		/*		
@@ -751,6 +722,11 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		}
 	
 		return summe;
+	}
+
+	@Override
+	public boolean canAddBeleg() {
+		return true;
 	}
 
 }

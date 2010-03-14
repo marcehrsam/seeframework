@@ -2,10 +2,10 @@ package model_test;
 
 import gui.MyPanel;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.Observable;
 
 import javax.swing.JCheckBox;
@@ -14,13 +14,19 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
+import search.AbstractSearch;
+
 public class Selektion extends MyPanel {
 
 	private GridBagConstraints gbc = null;
 	
+	private AbstractSearch mySearch;
+
 	public Selektion(){
 		InitLayout();
 		setBorder(new EtchedBorder());
+		//Strategy
+		mySearch = new Search_Order_Default();
 	}
 	
 	private void InitLayout() {
@@ -87,11 +93,32 @@ public class Selektion extends MyPanel {
 		add(jcOpenBill, gbc);
 		
 	}
+	
+	public AbstractSearch getMySearch() {
+		return mySearch;
+	}
+
+	public void setMySearch(AbstractSearch mySearch) {
+		this.mySearch = mySearch;
+		//TODO: eventHandling (setchanged)
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public ArrayList<AbstractBeleg> getOrders(){
+		Object result = mySearch.search();
+		ArrayList<AbstractBeleg> belegListe = null; 
+		
+		try{
+			belegListe = (ArrayList<AbstractBeleg>) result;
+		}catch(ClassCastException e){
+			e.printStackTrace();
+		}
+		return belegListe;
 	}
 
 }
