@@ -1,5 +1,5 @@
 #Fat Jar Configuration File
-#Fri Dec 25 19:17:11 CET 2009
+#Mon Jan 18 21:26:40 CET 2010
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
