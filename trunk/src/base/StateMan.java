@@ -32,6 +32,11 @@ public class StateMan {
 	public static final int TWICE_LOGGED_IN = 10;
 	public static final int ACCESSGRANTED = 11;
 	public static final int ACCESSDENIED = 12;
+	public static final int NO_PRODUCT_SELECTED = 13;
+	public static final int PRODUCT_ADDED = 14;
+	public static final int BILL_CREATED = 15;
+	public static final int BILL_CREATION_ERROR = 16;
+	
 	
 	
 	private StateMan(){
@@ -50,6 +55,11 @@ public class StateMan {
 		states.put(TWICE_LOGGED_IN, new MyState("Login fehlgeschlagen. Bitte loggen Sie sich zuerst aus.", Color.RED, NORMAL));
 		states.put(ACCESSGRANTED, new MyState("Aktion zugelassen.", Color.GREEN, NIEDRIG));
 		states.put(ACCESSDENIED, new MyState("Aktion nicht zugelassen.", Color.RED, HOCH));
+		states.put(NO_PRODUCT_SELECTED, new MyState("Bitte eine Kategorie wählen!", Color.RED, NORMAL));
+		states.put(PRODUCT_ADDED, new MyState("Produkt erfolgreich hinzugefügt.", Color.GREEN, NORMAL));
+		states.put(BILL_CREATED, new MyState("Rechnung erfolgreich erstellt.", Color.GREEN, NORMAL));
+		states.put(BILL_CREATION_ERROR, new MyState("Fehler beim Erstellen!", Color.RED, HOCH));
+		
 	}
 	
 	public static StateMan SM(){
