@@ -75,7 +75,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		}
 	}
 
-	private void InitData(){
+	protected void InitData(){
 		rechnung.put(RECHNUNG_ID, "050709-0001");
 		rechnung.put(AUFTRAG_ID, "200609-0001");
 		rechnung.put(KUNDE_ID, "Testkunde");
@@ -89,8 +89,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		rechnung.put(ORT, "Langewiesen");
 		rechnung.put(DATUM, "05.07.2009");
 	}
-	
-	
+		
 	public void generatePdf() throws DocumentException, MalformedURLException, IOException{
 		
 		//test, ob rechnung leer ist
@@ -140,35 +139,8 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		doc.close();
 	}
 
-	private void createFooter(PdfContentByte cb, BaseFont bf) {
-		
-		//zusatzinfos zur Zahlungsweise
-		cb.beginText();
-		cb.setFontAndSize(bf, 8);
-		cb.setTextMatrix(100, 200);
-		cb.showText("Bitte überweisen Sie den Rechnungsbetrag");
-		cb.setTextMatrix(100, 190);
-		cb.showText("innerhalb der nächsten 14 Tage auf folgendes Konto: ");
-		cb.setTextMatrix(100, 170);
-		cb.showText("Empfänger: Marc Ehrsam");
-		cb.setTextMatrix(100, 160);
-		cb.showText("Kto: 12204426");
-		cb.setTextMatrix(100, 150);
-		cb.showText("BLZ: 120 300 00");
-		cb.setTextMatrix(100, 140);
-		cb.showText("Deutsche Kreditbank Berlin");
-		
-		cb.endText();
-		
-		
-		
-		/*
-		cb.beginText();
-		cb.setFontAndSize(bf, 8);
-		cb.setTextMatrix(50, 70);
-		cb.showText("Dieses Dokument wurde maschinell erstellt und ist ohne Unterschrift gültig.");
-		cb.endText();
-		*/
+	protected void createFooter(PdfContentByte cb, BaseFont bf) {
+	
 		//footer
 		cb.beginText();
 		cb.setFontAndSize(bf, 8);
@@ -215,7 +187,26 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 	}
 
-	private void createStampSignature(PdfContentByte cb, BaseFont bf, Document doc) throws MalformedURLException, IOException, DocumentException {
+	protected void createStampSignature(PdfContentByte cb, BaseFont bf, Document doc) throws MalformedURLException, IOException, DocumentException {
+		
+		//zusatzinfos zur Zahlungsweise
+		cb.beginText();
+		cb.setFontAndSize(bf, 8);
+		cb.setTextMatrix(100, 200);
+		cb.showText("Bitte überweisen Sie den Rechnungsbetrag");
+		cb.setTextMatrix(100, 190);
+		cb.showText("innerhalb der nächsten 14 Tage auf folgendes Konto: ");
+		cb.setTextMatrix(100, 170);
+		cb.showText("Empfänger: Marc Ehrsam");
+		cb.setTextMatrix(100, 160);
+		cb.showText("Kto: 12204426");
+		cb.setTextMatrix(100, 150);
+		cb.showText("BLZ: 120 300 00");
+		cb.setTextMatrix(100, 140);
+		cb.showText("Deutsche Kreditbank Berlin");
+		
+		cb.endText();
+				
 		//stempel und unterschrift	
 		cb.beginText();
 		cb.setFontAndSize(bf, 10);
@@ -233,7 +224,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 	}
 
-	private void createTable(PdfContentByte cb, int page, int fromPages) {
+	protected void createTable(PdfContentByte cb, int page, int fromPages) {
 		
 		//spaltenverhältnisse
 		PdfPTable posTable = new PdfPTable(new float[]{0.1f, 0.2f, 0.1f, 0.55f, 0.3f, 0.3f});
@@ -338,7 +329,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 	}
 
-	private String replaceZeros(String einzelPreisMitFuehrendenNullen) {
+	protected String replaceZeros(String einzelPreisMitFuehrendenNullen) {
 		char[] str = einzelPreisMitFuehrendenNullen.toCharArray();
 		for(int i=0; i<einzelPreisMitFuehrendenNullen.length(); i++){
 			if(str[i]=='0'){
@@ -355,7 +346,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		return new String(str);
 	}
 
-	private void createRechteSeiteHeader(PdfContentByte cb, int anzAkt, int anzGes) throws DocumentException, IOException {
+	protected void createRechteSeiteHeader(PdfContentByte cb, int anzAkt, int anzGes) throws DocumentException, IOException {
 		
 		String seite = "" + anzAkt + "/" + anzGes;
 		cb.beginText();
@@ -395,7 +386,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 	}
 
-	private void createEmpfänger(PdfContentByte cb) throws DocumentException, IOException {
+	protected void createEmpfänger(PdfContentByte cb) throws DocumentException, IOException {
 		
 		/*
 		 * Variablen zur Positionierung des Empfängers
@@ -435,7 +426,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		cb.endText();
 	}
 
-	private void createBanner(Document doc, PdfContentByte cb) throws MalformedURLException, IOException, DocumentException {
+	protected void createBanner(Document doc, PdfContentByte cb) throws MalformedURLException, IOException, DocumentException {
 		//füge briefkopf ein
 		//Image img = Image.getInstance("briefkopf.png");
 		Image img = Image.getInstance(ClassLoader.getSystemResource("logo2.png"));
@@ -461,7 +452,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		cb.endText();
 	}
 
-	private int calcPages() {
+	protected int calcPages() {
 		int complete = positionen.size()/POSPERPAGE;
 		double partial = positionen.size()%POSPERPAGE;
 		if(partial != 0){
@@ -671,9 +662,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		}
 		
 	}
-	
-	
-	
+		
 	public void writeToDb() throws SQLException{
 		/*		
 		

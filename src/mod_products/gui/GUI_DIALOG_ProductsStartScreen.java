@@ -23,6 +23,9 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import base.Framework;
+import base.StateMan;
+
 import mod_products.IProductSource;
 import mod_products.IProductTree;
 import mod_products.MD_ProductManager;
@@ -45,6 +48,8 @@ public class GUI_DIALOG_ProductsStartScreen extends MyPanel implements TreeSelec
 	private JTree productList = null;
 	private JScrollPane leftScroller = null;
 	private JPanel centerPanel = null;
+	
+	private boolean categorySelected = false;
 	
 	//TEMP
 	private TreePath selectThis = null;
@@ -90,24 +95,31 @@ public class GUI_DIALOG_ProductsStartScreen extends MyPanel implements TreeSelec
 				content.remove(centerPanel);
 				Produkt neuesProdukt = new Produkt();
 				
-				MD_ProductManager.getInstance().addProdukt(neuesProdukt, getSelectedTreeItem());
-				refreshProductTree();
-				productList.expandPath(searchNode(neuesProdukt));
-				productList.setSelectionPath(searchNode(neuesProdukt));
-				
-//				productList.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {				
-//					@Override
-//					public void valueChanged(TreeSelectionEvent e) {
-//						System.out.println(e.getPath());
-//						productList.getSelectionModel().setSelectionPath(e.getPath());
-//						productList.repaint();
-//					}
-//				});
+				if(getSelectedTreeItem()!=null){
+						MD_ProductManager.getInstance().addProdukt(neuesProdukt, getSelectedTreeItem());
+						refreshProductTree();
+						productList.expandPath(searchNode(neuesProdukt));
+						productList.setSelectionPath(searchNode(neuesProdukt));
+						
+//						productList.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {				
+//							@Override
+//							public void valueChanged(TreeSelectionEvent e) {
+//								System.out.println(e.getPath());
+//								productList.getSelectionModel().setSelectionPath(e.getPath());
+//								productList.repaint();
+//							}
+//						});
 
-				centerPanel = new ProductViewPanel(neuesProdukt);
-				content.add(centerPanel, BorderLayout.CENTER);
-				centerPanel.revalidate();		
+						centerPanel = new ProductViewPanel(neuesProdukt);
+						content.add(centerPanel, BorderLayout.CENTER);
+						centerPanel.revalidate();
+						Framework.FW().setState(StateMan.SM().getState(StateMan.PRODUCT_ADDED));
+				}else{
+					Framework.FW().setState(StateMan.SM().getState(StateMan.NO_PRODUCT_SELECTED));	
+				}
+					
 			}
+				
 		});
 		newProductBtn.setText("Neues Item");
 		southPanel.add(newProductBtn);
@@ -199,6 +211,9 @@ public class GUI_DIALOG_ProductsStartScreen extends MyPanel implements TreeSelec
 	}
 	
 	public IProductTree getSelectedTreeItem(){
+		if(productList==null) return null;
+		if(productList.getSelectionPath()==null) return null;
+		if(productList.getSelectionPath().getLastPathComponent()==null)return null;
 		Object ret = productList.getSelectionPath().getLastPathComponent();
 		if(ret instanceof PGroup){
 			return (PGroup) ret;

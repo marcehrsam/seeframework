@@ -37,6 +37,7 @@ import mod_products.IProductGetter;
 import model_test.Position;
 import model_test.Produkt;
 import model_test.Rechnung;
+import model_test.Rechnung1;
 import tools.TO_JFrame;
 
 public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusListener, KeyListener, IProductGetter{
@@ -116,7 +117,7 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 		setModal(true);
 		TO_JFrame.getInstance().centerJFrame(this);
 		
-		rechnung = new Rechnung();
+		rechnung = new Rechnung1();
 		componentsToEnable = new ArrayList<JComponent>();
 		InitializeComponents();
 		disableCustomerFields();
