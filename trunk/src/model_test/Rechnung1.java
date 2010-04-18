@@ -3,7 +3,9 @@ package model_test;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -139,15 +141,19 @@ public class Rechnung1 extends Rechnung {
 	
 	cb.setFontAndSize(bf, 8);
 	cb.setTextMatrix(25, 530);
-	cb.showText("Pos.");
+	cb.showText("Position");
 	
 	cb.setFontAndSize(bf, 8);
-	cb.setTextMatrix(100, 530);
+	cb.setTextMatrix(80, 530);
+	cb.showText("Artikel");
+	
+	cb.setFontAndSize(bf, 8);
+	cb.setTextMatrix(160, 530);
 	cb.showText("Bezeichnung");
 	
 	cb.setFontAndSize(bf, 8);
 	cb.setTextMatrix(350, 530);
-	cb.showText("Anz.");
+	cb.showText("Anzahl");
 	
 	cb.setFontAndSize(bf, 8);
 	cb.setTextMatrix(450, 530);
@@ -167,34 +173,84 @@ public class Rechnung1 extends Rechnung {
 	
 	cb.endText();
 	
-	//Schleife start
-	
-	cb.beginText();
-	
 	cb.setFontAndSize(bf, 8);
-	cb.setTextMatrix(25, 530);
-	cb.showText("Pos.");
 	
-	cb.setFontAndSize(bf, 8);
-	cb.setTextMatrix(100, 530);
-	cb.showText("Bezeichnung");
+	//Iteration über die Positionen
 	
-	cb.setFontAndSize(bf, 8);
-	cb.setTextMatrix(350, 530);
-	cb.showText("Anz.");
+	int lastY = 500; //das immer -20 für nächste zeile bis ca. 200
+	int deltaY = 15; //zeilenabstand
 	
-	cb.setFontAndSize(bf, 8);
-	cb.setTextMatrix(450, 530);
-	cb.showText("Einzelpreis");
+	Iterator<Position> itPos = positionen.iterator(); 
 	
-	cb.setFontAndSize(bf, 8);
-	cb.setTextMatrix(520, 530);
-	cb.showText("Gesamtpreis");
-	
-	cb.endText();
+	while(itPos.hasNext()){
 		
-	//Schleife ende
-	
+		int currentY = lastY;
+		Position pos = itPos.next();
+		
+		//spalten durchgehen
+		
+		//positionsnummer
+		int posNr = -1;
+		if(positionen instanceof ArrayList){
+			posNr = ((ArrayList<Position>)positionen).indexOf(pos)+1;
+		}
+		cb.beginText();
+		cb.setTextMatrix(25, currentY);
+		cb.showText("" + posNr);
+		cb.endText();
+		
+		//Artikel
+		cb.beginText();
+		cb.setTextMatrix(80, currentY);
+		cb.showText("" + pos.getArtNr());
+		cb.endText();
+		
+		//Anzahl
+		cb.beginText();
+		cb.setTextMatrix(350, currentY);
+		cb.showText("" + pos.getAnzahl());
+		cb.endText();
+				
+		//Einzelpreis
+		cb.beginText();
+		cb.setTextMatrix(450, currentY);
+		cb.showText("" + pos.getEinzelpreis());
+		cb.endText();
+		
+		//Gesamtpreis
+		cb.beginText();
+		cb.setTextMatrix(520, currentY);
+		cb.showText("" + (pos.getAnzahl()*pos.getEinzelpreis()));
+		cb.endText();
+		
+		
+		//Beschreibung
+		String rawText = pos.getProdukt().getBezeichnung();
+		int charsPerLine = 100;
+		int start = -charsPerLine;
+		int end = 0;
+		boolean bEnd = false;
+		String currentTextLine = "";
+		//Schleife start
+		while(!bEnd){
+			start += charsPerLine;
+			end += charsPerLine;
+			if(end >= rawText.length()-1){
+				end = (rawText.length());
+				bEnd = true;
+			}
+			StringBuffer buff = new StringBuffer(rawText);
+			currentTextLine = buff.substring(start, end);
+			
+			cb.beginText();
+			cb.setTextMatrix(160, currentY);
+			cb.showText("" + currentTextLine);
+			cb.endText();
+			currentY -= deltaY;
+		}
+		lastY = currentY;	
+	}
+		
 	}
 
 	public String getRechnungsNummer() {
