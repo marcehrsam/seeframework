@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 
+import mod_customer.AbstractCustomer;
+import mod_customer.Customer;
 import mod_customer.gui.ICustomerSource;
 import model_test.ICustomerHolder;
 
@@ -28,6 +30,8 @@ public class AC_SetCustomer extends AbstractAction{
 	
 	public void actionPerformed(ActionEvent arg0) {
 		if(holder!=null)holder.setCustomer(source.getCustomer());
+		AbstractCustomer c = source.getCustomer();
+		
 		((JDialog)source).dispose();
 	}
 	

@@ -33,7 +33,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 	
 	private Map<String, String> rechnung = null;
 	
-	private List<TableModelListener> tableModelListenerList = null;
+	private List<TableModelListener> tableModelListenerList = null; 
 	
 	public final int POSPERPAGE = 10;
 	

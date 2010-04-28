@@ -44,8 +44,8 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 		db = new HashSet<Customer>();
 		listDataListenerList = new ArrayList<ListDataListener>();
 		//TODO: bei der Initialisierung werden die kundendaten aus der mysql db eingelesen
-		Customer testkunde = new Customer();
-		addKunde(testkunde);
+		connectToDB();
+		getDataFromServer();
 		//TODO: InitDB();
 	}
 	
@@ -175,8 +175,33 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 
 	@Override
 	public boolean getDataFromServer() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM kunden;");
+			while(rs.next()){
+				Customer nCust = new Customer();
+				nCust.setKundenNummer(rs.getString("kdnr"));
+				nCust.setAnrede(rs.getString("anrede"));
+				nCust.setName(rs.getString("name"));
+				nCust.setVorname(rs.getString("vorname"));
+				nCust.setStrasse(rs.getString("strasse"));
+				nCust.setNummer(rs.getString("hnr"));
+				nCust.setPlz(rs.getString("plz"));
+				nCust.setOrt(rs.getString("ort"));
+				nCust.setTel(rs.getString("telefon"));
+				nCust.setMobil(rs.getString("handy"));
+				nCust.setMail(rs.getString("mail"));
+				db.add(nCust);
+			}
+			setChanged();
+			notifyObservers();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 	
 

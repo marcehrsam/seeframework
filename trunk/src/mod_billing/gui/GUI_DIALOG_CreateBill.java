@@ -364,6 +364,7 @@ public class GUI_DIALOG_CreateBill extends JDialog implements Observer, FocusLis
 		tfCustomerName.setText(rechnung.getName());
 		tfCustomerFirstName.setText(rechnung.getVorname());
 		tfCustomerStreet.setText(rechnung.getStrasse());
+		System.out.println("Die Nummer lautet: " + rechnung.getNummer());
 		tfCustomerNumber.setText(rechnung.getNummer());
 		tfCustomerAdditionalField.setText(rechnung.getZusatzZeile());
 		tfCustomerZipCode.setText(rechnung.getPlz());
