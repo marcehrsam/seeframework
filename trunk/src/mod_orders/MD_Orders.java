@@ -166,5 +166,11 @@ public class MD_Orders extends AbstractModule{
 		lastID++;
 		return id;
 	}
+
+	@Override
+	public boolean getDataFromServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

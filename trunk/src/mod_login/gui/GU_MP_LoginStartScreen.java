@@ -104,7 +104,7 @@ public class GU_MP_LoginStartScreen extends MyPanel implements Observer{
 		}
 		User user = (User)jcbUser.getSelectedItem();
 		//abfrage, ob nutzer zum login berechtigt ist
-		if(user.grantAccess(PrivilegeProfiles.P().LOGIN)){
+		if(user.grantAccess(PrivilegeProfiles.P().R_LOGIN)){
 			@SuppressWarnings("unused")
 			String pass = new String(pwdField.getPassword());
 			//return MD_Login.getInstance().comparePasswords(user, pass);

@@ -253,5 +253,11 @@ public class MD_ProductManager extends AbstractModule implements IProductTree{
 	public String toString(){
 		return "Datenbank";
 	}
+
+	@Override
+	public boolean getDataFromServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

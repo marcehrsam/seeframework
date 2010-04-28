@@ -96,4 +96,10 @@ public class MD_Main extends AbstractModule {
 		return false;
 	}
 
+	@Override
+	public boolean getDataFromServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
