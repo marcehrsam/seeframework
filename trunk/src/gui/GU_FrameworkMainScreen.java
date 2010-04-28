@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -61,6 +63,16 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 		TO_JFrame.getInstance().centerJFrame(this);
 		initLayout();
 		setVisible(true);
+		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		addWindowListener(new WindowAdapter(){
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+			
+		});
 	}
 	
 	private void initLayout(){
@@ -192,5 +204,7 @@ public class GU_FrameworkMainScreen extends JFrame implements Observer{
 			getContentPane().add(this.content, BorderLayout.CENTER);
 		}
 	}
+	
+	
 
 }
