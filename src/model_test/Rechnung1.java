@@ -57,7 +57,7 @@ public class Rechnung1 extends Rechnung {
 			nachname = kd.getName();
 			vorname = kd.getVorname();
 			strasse = kd.getStrasse();
-			nummer = kd.getKundenNummer();
+			nummer = kd.getNummer();
 			zusatzzeile = kd.getZusatzZeile();
 			plz = kd.getPlz();
 			ort = kd.getOrt();
@@ -314,7 +314,7 @@ public class Rechnung1 extends Rechnung {
 	}
 
 	public String getNummer() {
-		return rechnungsNummer;
+		return nummer;
 	}
 
 	public void setNummer(String nummer) {
