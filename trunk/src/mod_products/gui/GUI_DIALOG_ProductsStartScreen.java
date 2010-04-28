@@ -24,6 +24,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import base.Framework;
+import base.MySQL_ProductGetter;
 import base.StateMan;
 
 import mod_products.IProductSource;
@@ -139,7 +140,8 @@ public class GUI_DIALOG_ProductsStartScreen extends MyPanel implements TreeSelec
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				searchNode((IProductTree)productList.getSelectionPath().getLastPathComponent());
+				//searchNode((IProductTree)productList.getSelectionPath().getLastPathComponent());
+				new MySQL_ProductGetter().catchProductsFromServer();
 			}
 		});
 		testBtn.setText("Test");

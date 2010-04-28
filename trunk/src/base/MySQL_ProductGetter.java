@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import mod_products.IProductTree;
+import mod_products.MD_ProductManager;
 import model_test.PGroup;
 import model_test.Produkt;
 import tools.Debug;
@@ -30,10 +31,9 @@ public class MySQL_ProductGetter {
 		
 		db = new ArrayList<IProductTree>();
 		
-		catchProductsFromServer();
 	}
 	
-	private void catchProductsFromServer(){
+	public void catchProductsFromServer(){
 		
 		PGroup serv = new PGroup("Service");
 		db.add(serv);
@@ -75,7 +75,7 @@ public class MySQL_ProductGetter {
 				System.out.println("==========EINGEFÜGT============");
 				serv.addTreeItem(p);
 			}
-			System.out.println();
+			MD_ProductManager.getInstance().setDB(db);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

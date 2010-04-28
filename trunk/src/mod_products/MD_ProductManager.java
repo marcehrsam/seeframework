@@ -45,6 +45,13 @@ public class MD_ProductManager extends AbstractModule implements IProductTree{
 		InitDB();
 	}
 	
+	public void setDB(ArrayList<IProductTree> sqlDB){
+		this.db = null;
+		this.db = sqlDB;
+		setChanged();
+		notifyObservers();
+	}
+	
 	//lieﬂt die Daten aus der Datenbank
 	private void InitDB(){
 		/*
