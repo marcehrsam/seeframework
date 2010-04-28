@@ -3,6 +3,8 @@ package mod_user;
 import gui.MyPanel;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -158,27 +160,38 @@ public class MD_User extends AbstractModule implements ComboBoxModel, UserEventS
 	@Override
 	public boolean readConfigFile() {
 	
-		//liesst benutzer und passwörter ein (aus user.dat)
-		//TODO: auf Hashs umstellen
-		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(CONFIGFILE);
-			Element root = doc.getRootElement();
-			List<Element> users = root.getChildren("User");
-			for(Element el : users){
-				String name = el.getAttributeValue("name");
-				String pass = el.getChildText("Pass");
-				MyUser user = new MyUser(name, pass);
-				String type = el.getChildText("Rights");
-				Set<Integer> rights = PrivilegeProfiles.P().getRights(type);
-				user.setRights(rights);
-				userList.add(user);
+		try{
+			//sql-abfrage hier
+			connectToDB();
+			if(!getDataFromServer()){
+				throw new NullPointerException("Fehler beim Einlesen der Kundendaten [SQL].");
 			}
-		} catch (JDOMException e) {
-			Debug.out("Fehler beim Datenimport mit JDOM [MD_Login/readConfigFile] F1");
-		} catch (IOException e) {
-			Debug.out("Fehler beim Datenimport mit JDOM [MD_Login/readConfigFile] F2");
+		}catch(Exception ex){
+			//liesst benutzer und passwörter ein (aus user.dat)
+			//TODO: auf Hashs umstellen
+			try {
+				SAXBuilder builder = new SAXBuilder();
+				Document doc = builder.build(CONFIGFILE);
+				Element root = doc.getRootElement();
+				List<Element> users = root.getChildren("User");
+				for(Element el : users){
+					String name = el.getAttributeValue("name");
+					String pass = el.getChildText("Pass");
+					MyUser user = new MyUser(name, pass);
+					String type = el.getChildText("Rights");
+					Set<Integer> rights = PrivilegeProfiles.P().getRights(type);
+					user.setRights(rights);
+					userList.add(user);
+				}
+			} catch (JDOMException e) {
+				Debug.out("Fehler beim Datenimport mit JDOM [MD_Login/readConfigFile] F1");
+			} catch (IOException e) {
+				Debug.out("Fehler beim Datenimport mit JDOM [MD_Login/readConfigFile] F2");
+			}
+			ex.printStackTrace();
+			return true;
 		}
+		
 		return true;
 	}
 
@@ -200,6 +213,27 @@ public class MD_User extends AbstractModule implements ComboBoxModel, UserEventS
 		for(UserEventListener l : userEventListenerList){
 			l.UserRemoved(user);
 		}
+	}
+
+	@Override
+	public boolean getDataFromServer() {
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user;");
+			while(rs.next()){
+				MyUser nUser = new MyUser(rs.getString("name"), rs.getString("pass"));
+				String type = rs.getString("rights");
+				Set<Integer> rights = PrivilegeProfiles.P().getRights(type);
+				nUser.setRights(rights);
+				userList.add(nUser);
+			}
+			setChanged();
+			notifyObservers();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	

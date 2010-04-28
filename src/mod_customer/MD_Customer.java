@@ -172,6 +172,12 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 	public Collection<Customer> getAllCustomers(){
 		return db;
 	}
+
+	@Override
+	public boolean getDataFromServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

@@ -121,4 +121,10 @@ public class MD_Login extends AbstractModule {
 		return false;
 	}
 
+	@Override
+	public boolean getDataFromServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

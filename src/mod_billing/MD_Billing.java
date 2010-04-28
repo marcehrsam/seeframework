@@ -262,6 +262,12 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 		}
 		
 	}
+
+	@Override
+	public boolean getDataFromServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 }
