@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 
 import mod_billing.MD_Billing;
 import model_test.Rechnung;
+import model_test.Rechnung1;
 
 public class ACT_BT_KLICK_OK_CreateBill extends AbstractAction {
 

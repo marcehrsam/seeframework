@@ -3,10 +3,15 @@ package model_test;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -28,8 +33,9 @@ import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
-public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableModel, Observer{
+public abstract class Rechnung extends AbstractBeleg implements ICustomerHolder, TableModel, Observer{
 	
 	private Map<String, String> rechnung = null;
 	
@@ -37,7 +43,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 	
 	public final int POSPERPAGE = 10;
 	
-	//für sql abfrage
+//	für sql abfrage
 	public final String RECHNUNG_ID = "REID";
 	public final String AUFTRAG_ID = "Auftrag";
 	public final String KUNDE_ID = "KdNrA";
@@ -57,8 +63,8 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 		tableModelListenerList = new ArrayList<TableModelListener>();
 		
-		Produkt testprodukt = new Produkt("SE-0001", "IT-Service (Stundensatz)", 20 );
-		Position testpos = new Position(testprodukt, 3);
+		Produkt testprodukt = new Produkt("0000001", "IT-Service (Stundensatz)", 20 );
+		Position testpos = new Position(testprodukt, 1);
 		positionen.add(testpos);
 		rechnung = new HashMap<String, String>();
  		InitData();
@@ -663,36 +669,7 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		
 	}
 		
-	public void writeToDb() throws SQLException{
-		/*		
-		
-		//Iteration über positionen
-		Iterator<Integer> it = positionen.keyset().iterator();
-		while(it.hasNext()){
-			int no = it.next();
-			Position pos = posititionen.get(no);
-			
-			String query = "INSERT INTO `se_framework_db1`.`auftraege` ( ";
-			query +=	 "`" + AUFTRAG_ID + "`";
-			query +=	",`" + "Position" + "`";
-			query +=	",`" + "ArtNr" + "`";
-			query +=	",`" + "Anzahl" + "`";
-			query +=	",`" + "Einzelpreis" + "`";
-			query +=	",`" + RECHNUNG_ID + "`";
-			
-			query += ") VALUES (";
-			query +=	 "'" + rechnung.get(AUFTRAG_ID) + "'";
-			query +=	", '" + pos.getPosNr() + "'";
-			query +=	", '" + pos.getArtNr() + "'";
-			query +=	", '" + pos.getAnzahl() + "'";
-			query +=	", '" + pos.getEinzelpreis() + "'";
-			query +=	", '" + rechnung.get(RECHNUNG_ID) + "'";
-			query += ");";
-			JOptionPane.showMessageDialog(null, query);
-			SQL_Writer.inst().getStmt().execute(query);
-		}
-	*/	
-	}
+	
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -718,4 +695,6 @@ public class Rechnung extends AbstractBeleg implements ICustomerHolder, TableMod
 		return true;
 	}
 
+	public abstract void writeToDb() throws SQLException;
+	
 }

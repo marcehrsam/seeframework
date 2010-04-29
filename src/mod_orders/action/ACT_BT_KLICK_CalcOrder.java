@@ -9,6 +9,7 @@ import mod_customer.Customer;
 import mod_orders.Order;
 import mod_orders.gui.IOrderHolder;
 import model_test.Rechnung;
+import model_test.Rechnung1;
 
 public class ACT_BT_KLICK_CalcOrder extends AbstractAction {
 
@@ -34,7 +35,7 @@ public class ACT_BT_KLICK_CalcOrder extends AbstractAction {
 //			MD_Billing.getInstance().addRechnung(rechnung);
 //		}
 		Order o = new Order(new Customer());
-		Rechnung re = new Rechnung(o);
+		Rechnung re = new Rechnung1(o);
 		MD_Billing.getInstance().addRechnung(re);
 
 	}
