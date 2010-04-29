@@ -3,14 +3,22 @@ package model_test;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 
+import mod_customer.AbstractCustomer;
 import mod_customer.Customer;
 
 import com.lowagie.text.Document;
@@ -19,12 +27,13 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class Rechnung1 extends Rechnung {
 		
 	private List<TableModelListener> tableModelListenerList = null;
 		
-	private String rechnungsNummer = "";
+	private String rechnungsNummer = "abab";
 	private String referenz = "";
 	private String anrede = "";
 	private String nachname = "";
@@ -363,4 +372,73 @@ public class Rechnung1 extends Rechnung {
 		notifyObservers();
 	}
 
+	public void writeToDb() throws SQLException{
+
+		//neuen auftrag erzeugen
+		Calendar cal = new GregorianCalendar();
+		String year = cal.get(GregorianCalendar.YEAR) + "";
+		int i_month = (cal.get(GregorianCalendar.MONTH) + 1);
+		String month = "";
+		if(i_month<10){
+			month = "0" + i_month;
+		}else{
+			month = i_month + "";
+		}
+				
+		String day = cal.get(GregorianCalendar.DATE) + "";
+		
+		MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setServerName("marc-ehrsam.de");
+        dataSource.setUser("web1187");
+        dataSource.setPassword("dechemax");
+        dataSource.setDatabaseName("usr_web1187_8");
+        dataSource.setPort(3306);
+       
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement(
+                Statement.CLOSE_ALL_RESULTS, Statement.RETURN_GENERATED_KEYS);
+       
+        statement.executeUpdate("insert into auftrag_kunde (auftrag, kunde, text, datum) values (NULL, '" + getKundenNummer() + "', '', '" + year + "-" + month + "-" + day + "')", Statement.RETURN_GENERATED_KEYS);
+     
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        if(generatedKeys.next()){
+            System.out.println(generatedKeys.getInt(1));    
+        }
+		
+		statement.close();
+		
+		//neue rechnung erzeugen und erste pos einfügen
+		
+		Iterator it = getPositionen().iterator();
+		
+		statement = connection.createStatement(Statement.CLOSE_ALL_RESULTS, Statement.RETURN_GENERATED_KEYS);
+		statement.executeUpdate("insert into rechnung (renr, pos, art, re_epreis) values (NULL, '1', '" + ((Position)it.next()).getArtNr() + "', "+ "'20'" + ")" , Statement.RETURN_GENERATED_KEYS);
+		generatedKeys = statement.getGeneratedKeys();
+		
+		//neue Rechnungsnummer erzeugen und speichern
+		//für pos 1
+		String renr = "000000";
+		if(generatedKeys.next()){
+			renr = generatedKeys.getInt(1) + "";
+			setRechnungsNummer(renr);
+		}
+		//für jede position
+		int pos = 2;
+		while(positionen.size()>=pos){
+			Position currentPos = (Position)it.next();
+			statement.executeUpdate("insert into rechnung (renr, pos, art, re_epreis) values (" + renr + ", '" + pos + "', '" + currentPos.getProdukt().getArtNr() + "', '"+ currentPos.getEinzelpreis() + "')");
+			pos++;
+		}
+		
+		connection.close();
+	}
+
+	@Override
+	public void setCustomer(AbstractCustomer customer) {
+		super.setCustomer(customer);
+		setKundenNummer(customer.getKundenNummer());
+		setChanged();
+		notifyObservers();
+	}
+	
 }
