@@ -19,6 +19,8 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import tools.MyDatabaseStructureFactory;
+
 import mod_billing.action.ACT_BT_KLICK_START_EditBill;
 import mod_billing.action.ACT_MI_KLICK_ChangeOrder;
 import mod_billing.action.ACT_MI_KLICK_CreateOrder;
@@ -264,10 +266,10 @@ public class MD_Billing extends AbstractModule implements TableModel, MouseListe
 	}
 
 	@Override
-	public boolean getDataFromServer() {
-		// TODO Auto-generated method stub
-		return false;
+	protected ArrayList<String> getSQLTableStrings() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(MyDatabaseStructureFactory.S_BILLS);
+		return list;
 	}
-	
 	
 }

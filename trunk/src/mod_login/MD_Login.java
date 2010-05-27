@@ -1,5 +1,7 @@
 package mod_login;
 
+import java.util.ArrayList;
+
 import gui.MyPanel;
 
 import javax.swing.JMenu;
@@ -122,9 +124,12 @@ public class MD_Login extends AbstractModule {
 	}
 
 	@Override
-	public boolean getDataFromServer() {
-		// TODO Auto-generated method stub
-		return false;
+	protected ArrayList<String> getSQLTableStrings() {
+		ArrayList<String> tableStrings = new ArrayList<String>();
+		tableStrings.add("users");
+		return tableStrings;
 	}
 
+	
+	
 }

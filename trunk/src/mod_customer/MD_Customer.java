@@ -20,6 +20,7 @@ import mod_customer.action.ACT_MI_KLICK_EditCustomer;
 import mod_customer.action.ACT_MI_KLICK_RemoveCustomer;
 import mod_customer.gui.GUI_DIALOG_CustomerStartScreen;
 import model_test.ICustomerHolder;
+import tools.MyDatabaseStructureFactory;
 import tools.SQL_Writer;
 import base.AbstractModule;
 
@@ -27,7 +28,7 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 
 	private static MD_Customer instance = null;
 	
-	public final String MENUNAME = "Kunde";
+	public final String MENUNAME = "Kunden";
 	
 	private JMenu menu = null;
 	
@@ -44,9 +45,11 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 		db = new HashSet<Customer>();
 		listDataListenerList = new ArrayList<ListDataListener>();
 		//TODO: bei der Initialisierung werden die kundendaten aus der mysql db eingelesen
-		connectToDB();
-		getDataFromServer();
+		//connectToDB();
+		//getDataFromServer();
 		//TODO: InitDB();
+		
+		
 	}
 	
 	private void InitDB() {
@@ -174,35 +177,42 @@ public class MD_Customer extends AbstractModule implements ICustomerHolder, List
 	}
 
 	@Override
-	public boolean getDataFromServer() {
-		
-		try {
-			ResultSet rs = stmt.executeQuery("SELECT * FROM kunden;");
-			while(rs.next()){
-				Customer nCust = new Customer();
-				nCust.setKundenNummer(rs.getString("kdnr"));
-				nCust.setAnrede(rs.getString("anrede"));
-				nCust.setName(rs.getString("name"));
-				nCust.setVorname(rs.getString("vorname"));
-				nCust.setStrasse(rs.getString("strasse"));
-				nCust.setNummer(rs.getString("hnr"));
-				nCust.setPlz(rs.getString("plz"));
-				nCust.setOrt(rs.getString("ort"));
-				nCust.setTel(rs.getString("telefon"));
-				nCust.setMobil(rs.getString("handy"));
-				nCust.setMail(rs.getString("mail"));
-				db.add(nCust);
-			}
-			setChanged();
-			notifyObservers();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
+	protected ArrayList<String> getSQLTableStrings() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(MyDatabaseStructureFactory.S_CUSTOMER);
+		return list;
 	}
+
+//	@Override
+//	public boolean getDataFromServer() {
+//		
+//		try {
+//			ResultSet rs = stmt.executeQuery("SELECT * FROM kunden;");
+//			while(rs.next()){
+//				Customer nCust = new Customer();
+//				nCust.setKundenNummer(rs.getString("kdnr"));
+//				nCust.setAnrede(rs.getString("anrede"));
+//				nCust.setName(rs.getString("name"));
+//				nCust.setVorname(rs.getString("vorname"));
+//				nCust.setStrasse(rs.getString("strasse"));
+//				nCust.setNummer(rs.getString("hnr"));
+//				nCust.setPlz(rs.getString("plz"));
+//				nCust.setOrt(rs.getString("ort"));
+//				nCust.setTel(rs.getString("telefon"));
+//				nCust.setMobil(rs.getString("handy"));
+//				nCust.setMail(rs.getString("mail"));
+//				db.add(nCust);
+//			}
+//			setChanged();
+//			notifyObservers();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
+//		
+//		return true;
+//	}
 	
 
 }

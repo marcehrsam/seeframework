@@ -11,6 +11,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 
+import tools.MyDatabaseStructureFactory;
+
 import mod_customer.Customer;
 import mod_orders.gui.GU_MP_OrdersStartScreen;
 import model_test.AbstractBeleg;
@@ -168,9 +170,10 @@ public class MD_Orders extends AbstractModule{
 	}
 
 	@Override
-	public boolean getDataFromServer() {
-		// TODO Auto-generated method stub
-		return false;
+	protected ArrayList<String> getSQLTableStrings() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(MyDatabaseStructureFactory.S_ORDERS);
+		return list;
 	}
 	
 }
