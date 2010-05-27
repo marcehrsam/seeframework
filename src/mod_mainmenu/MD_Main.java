@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -97,9 +98,9 @@ public class MD_Main extends AbstractModule {
 	}
 
 	@Override
-	public boolean getDataFromServer() {
-		// TODO Auto-generated method stub
-		return false;
+	protected ArrayList<String> getSQLTableStrings() {
+		// TODO hier könnte man settings nehmen
+		return null;
 	}
 
 }

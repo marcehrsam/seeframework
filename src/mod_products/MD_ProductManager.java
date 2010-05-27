@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import tools.MyDatabaseStructureFactory;
+
 import mod_products.action.ACT_MI_KLICK_DeleteProduct;
 import mod_products.action.ACT_MI_KLICK_EditProduct;
 import mod_products.action.ACT_MI_KLICK_NewProduct;
@@ -255,9 +257,10 @@ public class MD_ProductManager extends AbstractModule implements IProductTree{
 	}
 
 	@Override
-	public boolean getDataFromServer() {
-		// TODO Auto-generated method stub
-		return false;
+	protected ArrayList<String> getSQLTableStrings() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(MyDatabaseStructureFactory.S_PRODUCTS);
+		return list;
 	}
 	
 }

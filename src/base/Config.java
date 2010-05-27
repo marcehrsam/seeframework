@@ -1,7 +1,12 @@
 package base;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import mod_billing.MD_Billing;
 import mod_customer.MD_Customer;
@@ -9,6 +14,7 @@ import mod_login.MD_Login;
 import mod_orders.MD_Orders;
 import mod_products.MD_ProductManager;
 import mod_user.MD_User;
+import tools.SQLTools;
 
 public class Config implements ISqlSource {
 	
@@ -39,27 +45,78 @@ public class Config implements ISqlSource {
 	}
 	
 	public void Init(){
+		
+		//fügt module in Programm ein
+		addModules();
+		
+		//prüft, ob für jedes Modul eine SQL-DB auf dem Server vorhanden ist.
+		//falls eine Tabelle fehlt, so wird diese erstellt
+		checkAndCreateSQLTables();
+		
+		
+	}
+	
+	private void checkAndCreateSQLTables(){
+		//Namen der Tabellen als ArrayList
+		Set<String> tablesNeeded = new HashSet<String>();
+		List<AbstractModule> reqModules = Framework.FW().getModules();
+		Iterator<AbstractModule> it = reqModules.iterator();
+		
+		//fügt tabellennamen zur Liste der zu überprüfenden SQL-Einträge hinzu
+		while(it.hasNext()){
+			AbstractModule current = it.next();
+			try{
+				ArrayList<String> cur = current.getSQLTableStrings();
+				if(cur!=null){
+					tablesNeeded.addAll(cur);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	
+		//liste mit benötigten tabellen gefüllt
+		
+		//jetzt muss geprüft werden, ob die tabellen in der db (richtig) angelegt sind
+		
+		//sind tabellen angelegt?
+		SQLTools tool = new SQLTools();
+		ArrayList<String> tablesInDb = tool.getAllTablesinDB();
+		tablesNeeded.removeAll(tablesInDb);
+		
+		//wenn tablesNeeded leer ist, dann sind alle benötigten Tabellen vorhanden (noch prüfen, ob korrekt angelegt)
+		//sonst müssen tabellen erzeugt werden
+		if(!tablesNeeded.isEmpty()){
+			//fehlende tabellen anlegen
+			tool.createMissingTablesInDB(tablesNeeded);
+			
+		}
+		//alles ok, nur noch die tabellen prüfen
+		
+	}
+	
+	private void addModules(){
 		if(addMDLogin){
-		Framework.FW().addModule(MD_Login.getInstance(), true);
-		}
-		if(addMDBilling){
-		Framework.FW().addModule(MD_Billing.getInstance());
-		}
-		if(addMDCustomer){
-		Framework.FW().addModule(MD_Customer.getInstance());
-		}
-		if(addMDProductManager){
-		Framework.FW().addModule(MD_ProductManager.getInstance());
-		}
-		if(addMDUser){
-		Framework.FW().addModule(MD_User.getInstance());
-		}
-		if(addMDOrders){
-		Framework.FW().addModule(MD_Orders.getInstance());
-		}
-		if(addMDState){
-		Framework.FW().setState(StateMan.SM().getState(StateMan.INITOK));
-		}
+			Framework.FW().addModule(MD_Login.getInstance(), true);
+			}
+			if(addMDBilling){
+			Framework.FW().addModule(MD_Billing.getInstance());
+			}
+			if(addMDCustomer){
+			Framework.FW().addModule(MD_Customer.getInstance());
+			}
+			if(addMDProductManager){
+			Framework.FW().addModule(MD_ProductManager.getInstance());
+			}
+			if(addMDUser){
+			Framework.FW().addModule(MD_User.getInstance());
+			}
+			if(addMDOrders){
+			Framework.FW().addModule(MD_Orders.getInstance());
+			}
+			if(addMDState){
+			Framework.FW().setState(StateMan.SM().getState(StateMan.INITOK));
+			}
 	}
 	
 	public static Config getInstance(){

@@ -26,6 +26,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 import tools.Debug;
+import tools.MyDatabaseStructureFactory;
 import base.AbstractModule;
 import base.Framework;
 import base.StateMan;
@@ -162,10 +163,10 @@ public class MD_User extends AbstractModule implements ComboBoxModel, UserEventS
 	
 		try{
 			//sql-abfrage hier
-			connectToDB();
-			if(!getDataFromServer()){
-				throw new NullPointerException("Fehler beim Einlesen der Kundendaten [SQL].");
-			}
+//			connectToDB();
+//			if(!getDataFromServer()){
+//				throw new NullPointerException("Fehler beim Einlesen der Kundendaten [SQL].");
+//			}
 		}catch(Exception ex){
 			//liesst benutzer und passwörter ein (aus user.dat)
 			//TODO: auf Hashs umstellen
@@ -216,25 +217,32 @@ public class MD_User extends AbstractModule implements ComboBoxModel, UserEventS
 	}
 
 	@Override
-	public boolean getDataFromServer() {
-		try {
-			ResultSet rs = stmt.executeQuery("SELECT * FROM user;");
-			while(rs.next()){
-				MyUser nUser = new MyUser(rs.getString("name"), rs.getString("pass"));
-				String type = rs.getString("rights");
-				Set<Integer> rights = PrivilegeProfiles.P().getRights(type);
-				nUser.setRights(rights);
-				userList.add(nUser);
-			}
-			setChanged();
-			notifyObservers();
-			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
+	protected ArrayList<String> getSQLTableStrings() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(MyDatabaseStructureFactory.S_USERS);
+		return list;
 	}
+
+//	@Override
+//	public boolean getDataFromServer() {
+//		try {
+//			ResultSet rs = stmt.executeQuery("SELECT * FROM user;");
+//			while(rs.next()){
+//				MyUser nUser = new MyUser(rs.getString("name"), rs.getString("pass"));
+//				String type = rs.getString("rights");
+//				Set<Integer> rights = PrivilegeProfiles.P().getRights(type);
+//				nUser.setRights(rights);
+//				userList.add(nUser);
+//			}
+//			setChanged();
+//			notifyObservers();
+//			return true;
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
 	
 	
 }
