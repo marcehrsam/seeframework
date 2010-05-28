@@ -127,7 +127,7 @@ public class SQLTools {
 			Debug.out("--->erfolgreich ausgeführt");
 		} catch (SQLException e) {
 			Debug.out("!!!--->fehlerhaft");
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -179,11 +179,19 @@ public class SQLTools {
 	
 	//vergleicht alle Tabellen
 	public boolean validateStructure(){
-		return false;
+		boolean allOk = true;
+		Iterator<String> it = getAllTablesNeeded().iterator();
+		while(it.hasNext()){
+			String akt = it.next();
+			boolean bVal = validateStructure(akt);
+			if(bVal == false)allOk = false;
+		}
+		return allOk;
 	}
 	
 	//einzelne Tabelle abgleichen
 	public boolean validateStructure(String tabName){
+		connectToDB();
 		MyDatabaseStructureFactory fac = new MyDatabaseStructureFactory();
 		
 		Map<String, String> tab_current = new TreeMap<String, String>();
@@ -221,17 +229,27 @@ public class SQLTools {
 				
 				//parameter in beiden maps abgleichen
 				
-				String s1 = tab_current.get(c_string);
-				String s2 = tab_template.get(c_string);
+				String s_current = tab_current.get(c_string);
+				String s_template = tab_template.get(c_string);
 				
-				//fehler speichern
-				if(!(tab_current.get(c_string).toUpperCase()).equals((tab_template.get(c_string).toUpperCase()))){
-					tab_inconsistent.put(c_string, tab_current.get(c_string));
-					Debug.out(c_string + " ist fehlerhaft.");
-				}else {
-					Debug.out(c_string + " ist OK.");
+				if(s_current!=null){
+					//fehler speichern
+					if(!(s_current.toUpperCase()).equals((s_template.toUpperCase()))){
+						tab_inconsistent.put(c_string, tab_current.get(c_string));
+						Debug.out(c_string + " ist fehlerhaft.");
+					}else {
+						Debug.out(c_string + " ist OK.");
+					}
+				}else{
+					//es wurde eine spalte gelöscht
+					Debug.out("Spalte " + c_string + " wurde gelöscht.");
+					System.err.println("Spalte " + c_string + " wurde gelöscht.");
+					//was muss regeneriert werden?
+					tab_inconsistent.put(c_string, s_template);
 				}
+				
 			}
+			disconnectFromDB();
 			if(tab_inconsistent.isEmpty()){
 				//keine Fehler vorhanden
 				Debug.out("Tabelle " + tabName + " ist OK.");
@@ -245,6 +263,16 @@ public class SQLTools {
 			Debug.out("Tabelle " + tabName + " ist nicht vorhanden.");
 			return false;
 		}
+	}
+	
+	public ArrayList<String> getAllTablesNeeded(){
+		MyDatabaseStructureFactory fac = new MyDatabaseStructureFactory();
+		Iterator<String> it = fac.getStruc().keySet().iterator();
+		ArrayList<String> ret = new ArrayList<String>();
+		while(it.hasNext()){
+			ret.add(it.next());
+		}
+		return ret;
 	}
 	
 }

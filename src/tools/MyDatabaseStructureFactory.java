@@ -14,6 +14,12 @@ public class MyDatabaseStructureFactory {
 	public static final String S_BILLS = "bills";
 	
 	public static final String S_ACTIVE = "active";
+	
+	//SQL-Datentypen für mySQL
+	public static final String D_ID = "int(10) unsigned zerofill";
+	public static final String D_TEXT = "TEXT";
+	public static final String D_BOOL = "tinyint(1)";
+	public static final String D_DOUBLE = "DOUBLE";
 		
 	//Alle Tabellen als Struktur
 	public static TreeMap<String,Map<String, String>> struc = null;
@@ -50,10 +56,10 @@ public class MyDatabaseStructureFactory {
 	private void initOrdersTable() {
 		ordersTable.put("_pKey", "oid");
 		ordersTable.put("_tName", S_ORDERS);
-		ordersTable.put(S_ACTIVE, "BOOL");
+		ordersTable.put(S_ACTIVE, D_BOOL);
 		
 		//TODO: Struktur festlegen
-		ordersTable.put("oid", "INT UNSIGNED ZEROFILL NOT NULL");
+		ordersTable.put("oid", D_ID);
 		
 	}
 
@@ -61,27 +67,27 @@ public class MyDatabaseStructureFactory {
 
 		billsTable.put("_pKey", "bid");
 		billsTable.put("_tName", S_BILLS);
-		billsTable.put(S_ACTIVE, "BOOL");
+		billsTable.put(S_ACTIVE, D_BOOL);
 		
 		//TODO: Struktur festlegen
-		billsTable.put("bid", "INT UNSIGNED ZEROFILL NOT NULL");
+		billsTable.put("bid", D_ID);
 		
 	}
 
 	private void initCustomerStruct(){
 		
 		//ben.def.
-		customerTable.put("cid", "INT UNSIGNED ZEROFILL NOT NULL");
-		customerTable.put("title", "TEXT");
-		customerTable.put("name", "TEXT");
-		customerTable.put("firstname", "TEXT");
-		customerTable.put("street", "TEXT");
-		customerTable.put("sno", "TEXT");
-		customerTable.put("zip", "TEXT");
-		customerTable.put("city", "TEXT");
-		customerTable.put("phone", "TEXT");
-		customerTable.put("mobile", "TEXT");
-		customerTable.put("mail", "TEXT");
+		customerTable.put("cid", D_ID);
+		customerTable.put("title", D_TEXT);
+		customerTable.put("name", D_TEXT);
+		customerTable.put("firstname", D_TEXT);
+		customerTable.put("street", D_TEXT);
+		customerTable.put("sno", D_TEXT);
+		customerTable.put("zip", D_TEXT);
+		customerTable.put("city", D_TEXT);
+		customerTable.put("phone", D_TEXT);
+		customerTable.put("mobile", D_TEXT);
+		customerTable.put("mail", D_TEXT);
 				
 		//primärSchlüssel
 		customerTable.put("_pKey", "cid");
@@ -90,28 +96,28 @@ public class MyDatabaseStructureFactory {
 		customerTable.put("_tName", S_CUSTOMER);
 		
 		//sonstige flags
-		customerTable.put(S_ACTIVE, "BOOL");
+		customerTable.put(S_ACTIVE, D_BOOL);
 	}
 	private void initUserStruct(){
 		
 		userTable.put("_pKey", "uid");
 		userTable.put("_tName", S_USERS);
-		userTable.put(S_ACTIVE, "tinyint(1)");
+		userTable.put(S_ACTIVE, D_BOOL);
 		
-		userTable.put("uid", "int(10) unsigned zerofill");
-		userTable.put("name", "TEXT");
-		userTable.put("pass", "TEXT");
-		userTable.put("rights", "TEXT");
+		userTable.put("uid", D_ID);
+		userTable.put("name", D_TEXT);
+		userTable.put("pass", D_TEXT);
+		userTable.put("rights", D_TEXT);
 	}
 	private void initProductsStruct(){
 		productsTable.put("_pKey", "pid");
 		productsTable.put("_tName", S_PRODUCTS);
-		productsTable.put(S_ACTIVE, "BOOL");
+		productsTable.put(S_ACTIVE, D_BOOL);
 		
-		productsTable.put("pid", "INT UNSIGNED ZEROFILL NOT NULL");
-		productsTable.put("name", "TEXT");
-		productsTable.put("desc", "TEXT");
-		productsTable.put("scost", "DOUBLE");
+		productsTable.put("pid", D_ID);
+		productsTable.put("name", D_TEXT);
+		productsTable.put("desc", D_TEXT);
+		productsTable.put("scost", D_DOUBLE);
 		
 	}
 	
