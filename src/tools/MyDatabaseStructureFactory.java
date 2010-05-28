@@ -1,6 +1,5 @@
 package tools;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +12,8 @@ public class MyDatabaseStructureFactory {
 	public static final String S_ORDERS = "orders";
 	public static final String S_PRODUCTS = "products";
 	public static final String S_BILLS = "bills";
+	
+	public static final String S_ACTIVE = "active";
 		
 	//Alle Tabellen als Struktur
 	public static TreeMap<String,Map<String, String>> struc = null;
@@ -49,7 +50,7 @@ public class MyDatabaseStructureFactory {
 	private void initOrdersTable() {
 		ordersTable.put("_pKey", "oid");
 		ordersTable.put("_tName", S_ORDERS);
-		ordersTable.put("_active", "BOOL");
+		ordersTable.put(S_ACTIVE, "BOOL");
 		
 		//TODO: Struktur festlegen
 		ordersTable.put("oid", "INT UNSIGNED ZEROFILL NOT NULL");
@@ -60,7 +61,7 @@ public class MyDatabaseStructureFactory {
 
 		billsTable.put("_pKey", "bid");
 		billsTable.put("_tName", S_BILLS);
-		billsTable.put("_active", "BOOL");
+		billsTable.put(S_ACTIVE, "BOOL");
 		
 		//TODO: Struktur festlegen
 		billsTable.put("bid", "INT UNSIGNED ZEROFILL NOT NULL");
@@ -89,15 +90,15 @@ public class MyDatabaseStructureFactory {
 		customerTable.put("_tName", S_CUSTOMER);
 		
 		//sonstige flags
-		customerTable.put("_active", "BOOL");
+		customerTable.put(S_ACTIVE, "BOOL");
 	}
 	private void initUserStruct(){
 		
 		userTable.put("_pKey", "uid");
 		userTable.put("_tName", S_USERS);
-		userTable.put("_active", "BOOL");
+		userTable.put(S_ACTIVE, "tinyint(1)");
 		
-		userTable.put("uid", "INT UNSIGNED ZEROFILL NOT NULL");
+		userTable.put("uid", "int(10) unsigned zerofill");
 		userTable.put("name", "TEXT");
 		userTable.put("pass", "TEXT");
 		userTable.put("rights", "TEXT");
@@ -105,7 +106,7 @@ public class MyDatabaseStructureFactory {
 	private void initProductsStruct(){
 		productsTable.put("_pKey", "pid");
 		productsTable.put("_tName", S_PRODUCTS);
-		productsTable.put("_active", "BOOL");
+		productsTable.put(S_ACTIVE, "BOOL");
 		
 		productsTable.put("pid", "INT UNSIGNED ZEROFILL NOT NULL");
 		productsTable.put("name", "TEXT");
@@ -121,18 +122,18 @@ public class MyDatabaseStructureFactory {
 			Debug.out("mapInfo ist null -> createCreateTableStatement");
 			return "";
 		}
-		if(mapInfo.containsKey("_pKey") && mapInfo.containsKey("_tName") && mapInfo.containsKey("_active")){
+		if(mapInfo.containsKey("_pKey") && mapInfo.containsKey("_tName") && mapInfo.containsKey(S_ACTIVE)){
 			Debug.out("Enter loop: " + mapInfo.get("_tName"));
 			//allg.
 			statement = "CREATE TABLE `";
 			String pKey = mapInfo.get("_pKey");
 			String tName = mapInfo.get("_tName");
-			String active = mapInfo.get("_active");
+			String active = mapInfo.get(S_ACTIVE);
 			
 			statement += tName + "` ( ";
 		
 			String statement_end = ""; 
-			statement_end += "`active` " + active + " , ";
+			statement_end += "`" + S_ACTIVE +"` " + active + " , ";
 			statement_end += "PRIMARY KEY ( `"+ pKey +"` )";
 			statement_end += " )";
 				
@@ -140,7 +141,7 @@ public class MyDatabaseStructureFactory {
 			Set<String> kSet = mapInfo.keySet();
 			kSet.remove("_pKey");
 			kSet.remove("_tName");
-			kSet.remove("_active");
+			kSet.remove(S_ACTIVE);
 			Iterator<String> it = kSet.iterator(); 
 			while(it.hasNext()){
 				String cKey = it.next();
@@ -158,4 +159,16 @@ public class MyDatabaseStructureFactory {
 		if(tabName==null)return "";
 		return createCreateTableStatement(struc.get(tabName));
 	}	
+
+	public String createValidationStatement(String tabName){
+		return createValidationStatement(struc.get(tabName)); 
+	}
+	
+	private String createValidationStatement(Map<String,String> mapInfo){
+		return "describe " + mapInfo.get("_tName");
+	}
+
+	protected TreeMap<String, Map<String, String>> getStruc() {
+		return struc;
+	}
 }

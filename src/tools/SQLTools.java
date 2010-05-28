@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -128,6 +131,20 @@ public class SQLTools {
 		}
 	}
 
+	public ResultSet getResultSet(String query){
+		ResultSet rs = null;
+		try {
+			Debug.out(query);
+			rs = stmt.executeQuery(query);
+			Debug.out("--->erfolgreich ausgeführt");
+			return rs;
+		} catch (SQLException e) {
+			Debug.out("!!!--->fehlerhaft");
+			Debug.out(e.getMessage());
+			return null;
+		}
+	}
+	
 	public ArrayList<String> getAllTablesinDB(){
 		ArrayList<String> tablesInDB = new ArrayList<String>();
 		connectToDB();
@@ -160,5 +177,74 @@ public class SQLTools {
 		return true;
 	}
 	
+	//vergleicht alle Tabellen
+	public boolean validateStructure(){
+		return false;
+	}
+	
+	//einzelne Tabelle abgleichen
+	public boolean validateStructure(String tabName){
+		MyDatabaseStructureFactory fac = new MyDatabaseStructureFactory();
+		
+		Map<String, String> tab_current = new TreeMap<String, String>();
+		Map<String, String> tab_template = fac.getStruc().get(tabName);
+		
+		//aktuelle tab einlesen
+		ResultSet rs = getResultSet(fac.createValidationStatement(tabName));
+		if(rs!=null){
+			
+		
+			try {
+				while(rs.next()){
+					//name
+					String name = rs.getString(1);
+					//typ
+					String type = rs.getString(2);
+					tab_current.put(name, type);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+			//fehler speichern
+			Map<String, String> tab_inconsistent = new TreeMap<String, String>();
+			
+			Set<String> template_set = tab_template.keySet();
+			Iterator<String> it = template_set.iterator();
+					
+			while(it.hasNext()){
+				String c_string = it.next();
+				if(c_string.equals("_active"))c_string="active";
+				if((c_string.equals("_tName"))||(c_string.equals("_pKey")))continue;
+				
+				//parameter in beiden maps abgleichen
+				
+				String s1 = tab_current.get(c_string);
+				String s2 = tab_template.get(c_string);
+				
+				//fehler speichern
+				if(!(tab_current.get(c_string).toUpperCase()).equals((tab_template.get(c_string).toUpperCase()))){
+					tab_inconsistent.put(c_string, tab_current.get(c_string));
+					Debug.out(c_string + " ist fehlerhaft.");
+				}else {
+					Debug.out(c_string + " ist OK.");
+				}
+			}
+			if(tab_inconsistent.isEmpty()){
+				//keine Fehler vorhanden
+				Debug.out("Tabelle " + tabName + " ist OK.");
+				return true;
+			}else {
+				Debug.out("Tabelle " + tabName + " ist fehlerhaft.");
+				//fehler angeben
+				return false;
+			}
+		}else{
+			Debug.out("Tabelle " + tabName + " ist nicht vorhanden.");
+			return false;
+		}
+	}
 	
 }

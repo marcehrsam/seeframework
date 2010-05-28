@@ -9,13 +9,12 @@ public class TestMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//System.out.println(ClassLoader.getSystemResource("logo.png"));
-		//System.out.println(ClassLoader.getSystemResource("img/logo.png"));
-		//SQLTools t = new SQLTools();
-		//t.getAllTablesinDB();
-//		MyDatabaseStructureFactory fac = new MyDatabaseStructureFactory();
-//		fac.doIt();
+		SQLTools tool = new SQLTools();
+		tool.connectToDB();
+		MyDatabaseStructureFactory fac = new MyDatabaseStructureFactory();
+		tool.exec(fac.createCreateTableStatement(fac.S_USERS));
+		tool.validateStructure(fac.S_USERS);
+		tool.disconnectFromDB();
 	}
 
 }
