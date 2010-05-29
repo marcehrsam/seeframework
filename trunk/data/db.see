@@ -1,5 +1,5 @@
 <xml>
 <DbUser>web1187</DbUser>
 <DbPass>dechemax</DbPass>
-<DbPath>jdbc:mysql://marc-ehrsam.de:3306/usr_web1187_6</DbPath>
+<DbPath>jdbc:mysql://marc-ehrsam.de:3306/usr_web1187_8</DbPath>
 </xml>

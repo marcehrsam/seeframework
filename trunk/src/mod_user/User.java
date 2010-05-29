@@ -1,10 +1,13 @@
 package mod_user;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Set;
 
 import tools.Debug;
+import tools.SQLTools;
 
 import base.Framework;
 import base.StateMan;
@@ -13,16 +16,54 @@ public abstract class User extends Observable{
 
 	private String userName = null;
 	private String pwdHash = null;
+	private int uid = -1;
+	private int gid = -1;
 	
+	public int getGid() {
+		return gid;
+	}
+
+	public void setGid(int gid) {
+		this.gid = gid;
+	}
+
+	public int getUid() {
+		return uid;
+	}
+
+	public void setUid(int uid) {
+		this.uid = uid;
+		setChanged();
+		notifyObservers();
+	}
+
 	private Set<Integer> privileges = null;
 	
 	//TODO: Rechte festlegen
 	
+	@Deprecated
 	public User(String name, String password){
 		setUserName(name);
 		setPassword(password);
 		privileges = new HashSet<Integer>(); 
 		
+	}
+	
+	public User(int uid){
+		SQLTools tool = new SQLTools();
+		tool.connectToDB();
+		ResultSet rs = tool.getResultSet("select name, pass, uid from `users` where uid="+uid);
+		try {
+			while(rs.next()){
+				setUserName(rs.getString("name"));
+				setPassword(rs.getString("pass"));
+				setUid(uid);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tool.disconnectFromDB();
 	}
 	
 	public boolean grantAccess(int priv){
