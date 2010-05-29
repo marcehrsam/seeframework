@@ -6,5 +6,9 @@ public class MyUser extends User{
 		super(name, password);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public MyUser(int uid){
+		super(uid);
+	}
 
 }
