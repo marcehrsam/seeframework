@@ -183,14 +183,14 @@ public class SQLTools {
 		Iterator<String> it = getAllTablesNeeded().iterator();
 		while(it.hasNext()){
 			String akt = it.next();
-			boolean bVal = validateStructure(akt);
-			if(bVal == false)allOk = false;
+			Map<String, String> ic_map = validateStructure(akt);
+			if((ic_map == null)||((ic_map.size()>1)))allOk = false;
 		}
 		return allOk;
 	}
 	
 	//einzelne Tabelle abgleichen
-	public boolean validateStructure(String tabName){
+	public Map<String, String> validateStructure(String tabName){
 		connectToDB();
 		MyDatabaseStructureFactory fac = new MyDatabaseStructureFactory();
 		
@@ -253,15 +253,15 @@ public class SQLTools {
 			if(tab_inconsistent.isEmpty()){
 				//keine Fehler vorhanden
 				Debug.out("Tabelle " + tabName + " ist OK.");
-				return true;
+				return tab_inconsistent;
 			}else {
 				Debug.out("Tabelle " + tabName + " ist fehlerhaft.");
 				//fehler angeben
-				return false;
+				return tab_inconsistent;
 			}
 		}else{
 			Debug.out("Tabelle " + tabName + " ist nicht vorhanden.");
-			return false;
+			return null;
 		}
 	}
 	
@@ -273,6 +273,18 @@ public class SQLTools {
 			ret.add(it.next());
 		}
 		return ret;
+	}
+	
+	public boolean createMissingColumns(Map<String, String> mapInfo){
+		connectToDB();
+		String tableName = "";
+		tableName = mapInfo.get("_tName");
+		Map<String, String> columnsToAdd = validateStructure(tableName);
+		
+		//in mapInfo muss _tName angegeben sein
+		exec("alter table `users` add `blub1` varchar(20)");
+		disconnectFromDB();
+		return false;
 	}
 	
 }
