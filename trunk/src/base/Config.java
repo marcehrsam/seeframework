@@ -30,12 +30,12 @@ public class Config implements ISqlSource {
 	
 	//welche Module sollen geadded werden?
 	private boolean addMDLogin = true;
-	private boolean addMDBilling = true;
-	private boolean addMDCustomer = true;
-	private boolean addMDProductManager = true;
+	private boolean addMDBilling = false;
+	private boolean addMDCustomer = false;
+	private boolean addMDProductManager = false;
 	private boolean addMDUser = true;
-	private boolean addMDOrders = true;
-	private boolean addMDState = true;
+	private boolean addMDOrders = false;
+	private boolean addMDState = false;
 	
 	//hier wird die komplette config gespeichert
 	private Map<String,String> cfg = null;

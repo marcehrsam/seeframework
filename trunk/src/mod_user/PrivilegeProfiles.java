@@ -11,8 +11,8 @@ public class PrivilegeProfiles {
 	
 	private Map<String, Set<Integer>> profiles = null;
 	
-	private static final String ADMIN = "admin";
-	private static final String USER = "user";
+	public static final String ADMIN = "admin";
+	public static final String USER = "user";
 	
 	public final int R_LOGIN = 0;
 	public final int R_USER = 1;
