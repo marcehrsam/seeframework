@@ -27,6 +27,7 @@ import org.jdom.input.SAXBuilder;
 
 import tools.Debug;
 import tools.MyDatabaseStructureFactory;
+import tools.SQLTools;
 import base.AbstractModule;
 import base.Framework;
 import base.StateMan;
@@ -53,6 +54,8 @@ public class MD_User extends AbstractModule implements ComboBoxModel, UserEventS
 		listDataListenerList = new ArrayList<ListDataListener>();
 		userEventListenerList = new ArrayList<UserEventListener>();
 		this.addUserEventListener(Framework.FW());
+		
+		readDB();
 	}
 	
 	public static MD_User getInstance(){
@@ -244,5 +247,23 @@ public class MD_User extends AbstractModule implements ComboBoxModel, UserEventS
 //		return false;
 //	}
 	
+	private void readDB(){
+		SQLTools tool = new SQLTools();
+		tool.connectToDB();
+		MyDatabaseStructureFactory fac = new MyDatabaseStructureFactory();
+		ResultSet rs = tool.getResultSet(fac.createGetSelectTableQuery(MyDatabaseStructureFactory.S_USERS));
+		
+		try {
+			while(rs.next()){
+				User user = new MyUser(rs.getString(fac.CH_NAME), rs.getString(fac.CH_PASSWD));
+				user.setRights(PrivilegeProfiles.P().getRights(rs.getString(fac.CH_RIGHTS)));
+				addUser((MyUser)user);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tool.disconnectFromDB();
+	}
 	
 }

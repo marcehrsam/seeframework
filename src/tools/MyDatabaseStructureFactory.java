@@ -20,6 +20,10 @@ public class MyDatabaseStructureFactory {
 	public static final String D_TEXT = "TEXT";
 	public static final String D_BOOL = "tinyint(1)";
 	public static final String D_DOUBLE = "DOUBLE";
+	
+	public static final String CH_NAME = "name";
+	public static final String CH_PASSWD = "pass";
+	public static final String CH_RIGHTS = "rights";
 		
 	//Alle Tabellen als Struktur
 	public static TreeMap<String,Map<String, String>> struc = null;
@@ -105,9 +109,9 @@ public class MyDatabaseStructureFactory {
 		userTable.put(S_ACTIVE, D_BOOL);
 		
 		userTable.put("uid", D_ID);
-		userTable.put("name", D_TEXT);
-		userTable.put("pass", D_TEXT);
-		userTable.put("rights", D_TEXT);
+		userTable.put(CH_NAME, D_TEXT);
+		userTable.put(CH_PASSWD, D_TEXT);
+		userTable.put(CH_RIGHTS, D_TEXT);
 	}
 	private void initProductsStruct(){
 		productsTable.put("_pKey", "pid");
@@ -177,4 +181,10 @@ public class MyDatabaseStructureFactory {
 	protected TreeMap<String, Map<String, String>> getStruc() {
 		return struc;
 	}
+	
+	public String createGetSelectTableQuery(String tabName) {
+		
+		return "select * from `" + tabName + "`";
+	}
+	
 }

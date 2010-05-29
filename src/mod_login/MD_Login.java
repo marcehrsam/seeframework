@@ -1,21 +1,24 @@
 package mod_login;
 
-import java.util.ArrayList;
-
 import gui.MyPanel;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import tools.Debug;
-
 import mod_login.action.ACT_MI_KLICK_AsAdmin;
 import mod_login.action.ACT_MI_KLICK_Logout;
 import mod_login.gui.GU_MP_LoginStartScreen;
 import mod_user.MyUser;
 import mod_user.User;
+import tools.Debug;
+import tools.MyDatabaseStructureFactory;
+import tools.SQLTools;
 import base.AbstractModule;
 import base.Framework;
 
@@ -36,6 +39,8 @@ public class MD_Login extends AbstractModule {
 		super();
 	}
 	
+
+
 	public static MD_Login getInstance(){
 		if(instance == null) instance = new MD_Login();
 		return instance;
